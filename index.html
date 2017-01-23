@@ -634,6 +634,12 @@
 <p>如果很不幸，你输入账号密码后，有如下错误提示的话</p>
 <p><img src="/2017/01/22/Windows下远程桌面连接树莓派3代/QQ截图20170122172828.png" alt="QQ截图20170122172828"></p>
 <p>那很有可能是你的tightvncserver服务没装好，请装好个这个服务，再尝试。</p>
+<h5 id="调整远程桌面的分辨率"><a href="#调整远程桌面的分辨率" class="headerlink" title="调整远程桌面的分辨率"></a>调整远程桌面的分辨率</h5><p>根据自身屏幕的大小来调整远程桌面的分辨率是非常有必要的，这样当你将远程窗口全屏时，能让你感觉有在实际操作那台计算机一样的体验。</p>
+<p><img src="/2017/01/22/Windows下远程桌面连接树莓派3代/QQ截图20170123181348.png" alt="QQ截图20170123181348"></p>
+<p>在远程桌面连接之前，点开选项，选择显示标签，调整对应显示器的分辨率即可。</p>
+<p>实际上，在树莓派的系统中，也就是SD卡的根目录有一个config.txt的配置文件，里面有参数可以配置HDMI的分辨率</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">dtparam=audio=on</span><br><span class="line">hdmi_group=2</span><br><span class="line">hdmi_mode=1</span><br><span class="line">hdmi_mode=87</span><br><span class="line">hdmi_cvt 800 480 60 6 0 0 0</span><br><span class="line">start_x=1</span><br><span class="line">gpu_mem=128</span><br></pre></td></tr></table></figure>
+<p>实际上，这个文件配置的是HDMI的实际物理输出的分辨率，与我们这里的远程桌面的分辨率的配置是完全不相关的。这两个分辨率的配置完全可以不一样。</p>
 <h5 id="参考文献："><a href="#参考文献：" class="headerlink" title="参考文献："></a>参考文献：</h5><p><a href="http://www.shumeipaiba.com/wanpai/jiaocheng/16.html" target="_blank" rel="external">http://www.shumeipaiba.com/wanpai/jiaocheng/16.html</a></p>
 <p><a href="http://www.raspbian.org/RaspbianMirrors" target="_blank" rel="external">http://www.raspbian.org/RaspbianMirrors</a></p>
 <p><a href="http://jingyan.eeboard.com/article/75080#/prettyPhoto%5Bpp_gal%5D/1/" target="_blank" rel="external">http://jingyan.eeboard.com/article/75080#/prettyPhoto%5Bpp_gal%5D/1/</a></p>

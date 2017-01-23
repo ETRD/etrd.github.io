@@ -99,7 +99,8 @@
 <meta property="og:image" content="etrd.org/2017/01/22/Windows下远程桌面连接树莓派3代/QQ截图20170122172408.png">
 <meta property="og:image" content="etrd.org/2017/01/22/Windows下远程桌面连接树莓派3代/QQ截图20170122172629.png">
 <meta property="og:image" content="etrd.org/2017/01/22/Windows下远程桌面连接树莓派3代/QQ截图20170122172828.png">
-<meta property="og:updated_time" content="2017-01-23T02:52:50.841Z">
+<meta property="og:image" content="etrd.org/2017/01/22/Windows下远程桌面连接树莓派3代/QQ截图20170123181348.png">
+<meta property="og:updated_time" content="2017-01-23T10:21:20.942Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Windows下远程桌面连接树莓派3代">
 <meta name="twitter:description" content="引言树莓派相当于一台小型的个人电脑，所以我们在使用时通常需要外接显示器、键盘、鼠标，但通常情况下我们是将树莓派作为一个开发平台，因此单独为它弄台显示器键盘什么的非常不方便，因此我希望在自己熟悉的Windows环境下，通过远程桌面的方式链接到树莓派开发板上，这样可以使用自己电脑上的键盘鼠标，甚至是显示器为树莓派远程服务了。树莓派我昨天刚开始接触，所以远程链接方面还是绕了点弯子，下面记录下步骤以供参考">
@@ -431,6 +432,12 @@
 <p>如果很不幸，你输入账号密码后，有如下错误提示的话</p>
 <p><img src="/2017/01/22/Windows下远程桌面连接树莓派3代/QQ截图20170122172828.png" alt="QQ截图20170122172828"></p>
 <p>那很有可能是你的tightvncserver服务没装好，请装好个这个服务，再尝试。</p>
+<h5 id="调整远程桌面的分辨率"><a href="#调整远程桌面的分辨率" class="headerlink" title="调整远程桌面的分辨率"></a>调整远程桌面的分辨率</h5><p>根据自身屏幕的大小来调整远程桌面的分辨率是非常有必要的，这样当你将远程窗口全屏时，能让你感觉有在实际操作那台计算机一样的体验。</p>
+<p><img src="/2017/01/22/Windows下远程桌面连接树莓派3代/QQ截图20170123181348.png" alt="QQ截图20170123181348"></p>
+<p>在远程桌面连接之前，点开选项，选择显示标签，调整对应显示器的分辨率即可。</p>
+<p>实际上，在树莓派的系统中，也就是SD卡的根目录有一个config.txt的配置文件，里面有参数可以配置HDMI的分辨率</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">dtparam=audio=on</span><br><span class="line">hdmi_group=2</span><br><span class="line">hdmi_mode=1</span><br><span class="line">hdmi_mode=87</span><br><span class="line">hdmi_cvt 800 480 60 6 0 0 0</span><br><span class="line">start_x=1</span><br><span class="line">gpu_mem=128</span><br></pre></td></tr></table></figure>
+<p>实际上，这个文件配置的是HDMI的实际物理输出的分辨率，与我们这里的远程桌面的分辨率的配置是完全不相关的。这两个分辨率的配置完全可以不一样。</p>
 <h5 id="参考文献："><a href="#参考文献：" class="headerlink" title="参考文献："></a>参考文献：</h5><p><a href="http://www.shumeipaiba.com/wanpai/jiaocheng/16.html" target="_blank" rel="external">http://www.shumeipaiba.com/wanpai/jiaocheng/16.html</a></p>
 <p><a href="http://www.raspbian.org/RaspbianMirrors" target="_blank" rel="external">http://www.raspbian.org/RaspbianMirrors</a></p>
 <p><a href="http://jingyan.eeboard.com/article/75080#/prettyPhoto%5Bpp_gal%5D/1/" target="_blank" rel="external">http://jingyan.eeboard.com/article/75080#/prettyPhoto%5Bpp_gal%5D/1/</a></p>
@@ -701,7 +708,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-5"><a class="nav-link" href="#引言"><span class="nav-number">1.</span> <span class="nav-text">引言</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#准备工作"><span class="nav-number">2.</span> <span class="nav-text">准备工作</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#更改系统源的镜像源"><span class="nav-number">3.</span> <span class="nav-text">更改系统源的镜像源</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#安装远程登录服务"><span class="nav-number">4.</span> <span class="nav-text">安装远程登录服务</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#配置树莓派账户的远程登录密码"><span class="nav-number">5.</span> <span class="nav-text">配置树莓派账户的远程登录密码</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#在Windows下远程链接"><span class="nav-number">6.</span> <span class="nav-text">在Windows下远程链接</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#参考文献："><span class="nav-number">7.</span> <span class="nav-text">参考文献：</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-5"><a class="nav-link" href="#引言"><span class="nav-number">1.</span> <span class="nav-text">引言</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#准备工作"><span class="nav-number">2.</span> <span class="nav-text">准备工作</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#更改系统源的镜像源"><span class="nav-number">3.</span> <span class="nav-text">更改系统源的镜像源</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#安装远程登录服务"><span class="nav-number">4.</span> <span class="nav-text">安装远程登录服务</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#配置树莓派账户的远程登录密码"><span class="nav-number">5.</span> <span class="nav-text">配置树莓派账户的远程登录密码</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#在Windows下远程链接"><span class="nav-number">6.</span> <span class="nav-text">在Windows下远程链接</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#调整远程桌面的分辨率"><span class="nav-number">7.</span> <span class="nav-text">调整远程桌面的分辨率</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#参考文献："><span class="nav-number">8.</span> <span class="nav-text">参考文献：</span></a></li></ol></div>
             
 
           </div>
