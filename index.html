@@ -382,11 +382,9 @@
 
       
         
-          
-          引言摸索了几天树莓派，基本对其有了一个基本而肤浅的了解，前面已经实现了在Windows下对树莓派进行远程桌面连接，因此我已经迫不及待的希望开始对其进行应用开发了，我牢记着自己的目标，是要在上面实现一个全是C代码的工程，而不是纯粹来玩这么一个小型的电脑，因此相同功能的实现方法我似乎没有太多的选择，我的选择只有一个，就是在上面运行一个C语言的工程。
-因此，如何开发在树莓派上运行的C程序，以及用什么IDE开发，在什么个系统下开发成了核心的几个问题。
-树莓派基础Raspbian系统Raspbian是基于Debian Linux的一个系统，因此我理解它就是一个基于Linux的系统，只是针对树莓派这个平台
-          ...
+          <h4 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h4><p>摸索了几天树莓派，基本对其有了一个基本而肤浅的了解，前面已经实现了在Windows下对树莓派进行远程桌面连接，因此我已经迫不及待的希望开始对其进行应用开发了，我牢记着自己的目标，是要在上面实现一个全是C代码的工程，而不是纯粹来玩这么一个小型的电脑，因此相同功能的实现方法我似乎没有太多的选择，我的选择只有一个，就是在上面运行一个C语言的工程。</p>
+<p>因此，如何开发在树莓派上运行的C程序，以及用什么IDE(集成开发环境)开发，在什么个系统下开发成了核心的几个问题。</p>
+<h4 id="树莓派基础"><a href="#树莓派基础" class="headerlink" title="树莓派基础"></a>树莓派基础</h4><h5 id="Raspbian系统"><a href="#Raspbian系统" class="headerlink" title="Raspbian系统"></a>Raspbian系统</h5><p>Raspbian是基于Debian Linux的一个系统，因此我理解它就是一个基于Linux的系统，只是针对树莓派这个平台做了相应的优化和修改。Raspbian又分Raspbian Wheezy和Raspbian Jessie两个版本，原因是它们基于的Debian的版本不同，Raspbian Wheezy基于Debian Wheezy，Raspbian Jessie基于Debian Jessie，现在较新的是基于Debian Jessie的Raspbian Jessie系统，我现在的树莓派安装就是这个系统，是3-18号以后的版本。因此我的理解是Linux衍生出了Debian Jessie，Debian Jessie又衍生出了Raspbian Jessie。因此我觉得开发在Raspbian Jessie上运行的应用程序实际上是开发在Linux上运行的应用程序，但很遗憾，我还未曾正式接触过Linux，因此即使弄清楚了这个关系，我也还是从0开始。</p>
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="/2017/01/25/Windows下建立第一个树莓派应用程序/#more" rel="contents">
@@ -541,16 +539,18 @@
 
       
         
-          
-          引言Hexo一个很好的博客框架，然而插入本地图片的路径问题让人十分头疼，因为在最后生成public的html文件时，每篇博文都是生成在用年月日做文件目录的文件下，例如
-1\blog\public\2017\01\22\Windows下远程桌面连接树莓派3代
-而主页的html文件又是这个文件下，与博文的目录肯定是不同的
-1\blog\public
-这与我们在
-1\blog\source\_posts
-目录下编写博客md源文件时的目录结构是完全不同的。
-在hexo的官方文档资源文件夹章节上，其提供了一种插入图片的方面，但是非常遗憾，它竟然是使用标签插件的方式，而不是markdown语法。据了解这实
-          ...
+          <h5 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h5><p>Hexo一个很好的博客框架，然而插入本地图片的路径问题让人十分头疼，因为在最后生成public的html文件时，每篇博文都是生成在用年月日做文件目录的文件下，例如</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">\blog\public\2017\01\22\Windows下远程桌面连接树莓派3代</span><br></pre></td></tr></table></figure>
+<p>而主页的html文件又是这个文件下，与博文的目录肯定是不同的</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">\blog\public</span><br></pre></td></tr></table></figure>
+<p>这与我们在</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">\blog\source\_posts</span><br></pre></td></tr></table></figure>
+<p>目录下编写博客md源文件时的目录结构是完全不同的。</p>
+<p>在hexo的官方文档<a href="https://hexo.io/zh-cn/docs/asset-folders.html">资源文件夹章节</a>上，其提供了一种插入图片的方面，但是非常遗憾，它竟然是使用标签插件的方式，而不是markdown语法。据了解这实际上是一个Hexo 3之前网友为图片路径问题开发的一个插件，这个插件被集成在了Hexo 3里面。这个插件的使用方法官方给出是这样的：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&#123;% asset_path slug %&#125;</span><br><span class="line">&#123;% asset_img slug [title] %&#125;</span><br><span class="line">&#123;% asset_link slug [title] %&#125;</span><br></pre></td></tr></table></figure>
+<p>这种奇怪的方式我不明白为什么会被官方采纳，因为它最大的弱点在于，在编写文章时，你看到的是一行标签代码，而不能显示图片，也就是使用markdown编辑器进行文章编写时，不能可见即所得。</p>
+<h5 id="Hexo环境"><a href="#Hexo环境" class="headerlink" title="Hexo环境"></a>Hexo环境</h5><p>Hexo环境的搭建看过不少文章，但对我而言是极其繁琐和陌生的，而我的目的主要在于利用它来写博客，我在意的是我博客的内容而不是搭建博客自身的过程，因此我是直接使用了<a href="Hexo懒人携带版 / PortableHexo">Hexo懒人携带版 / PortableHexo</a>，它的优势是，纯傻瓜式操作，无法安装hexo git nodejs等环境，压缩包解压直接用，直接发布，十分感谢这个懒人包团队的工作。该懒人包内相关软件的版本如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">版本 / Version</span><br><span class="line">Git: 2.7.4</span><br><span class="line">Nodejs: 4.4.0</span><br><span class="line">Npm: 3.8.3</span><br><span class="line">Hexo: 3.2</span><br></pre></td></tr></table></figure>
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="/2017/01/23/hexo中完美插入本地图片/#more" rel="contents">
@@ -705,11 +705,12 @@
 
       
         
-          
-          引言树莓派相当于一台小型的个人电脑，所以我们在使用时通常需要外接显示器、键盘、鼠标，但通常情况下我们是将树莓派作为一个开发平台，因此单独为它弄台显示器键盘什么的非常不方便，因此我希望在自己熟悉的Windows环境下，通过远程桌面的方式链接到树莓派开发板上，这样可以使用自己电脑上的键盘鼠标，甚至是显示器为树莓派远程服务了。树莓派我昨天刚开始接触，所以远程链接方面还是绕了点弯子，下面记录下步骤以供参考。
-准备工作首先，你的树莓派需要安装好系统，我买回来时，店家已经帮我装好在SD卡中了，安装的是树莓派官方推荐的raspbian jessie系统，版本就不提了，我想应该与后续的步骤并不太相关。
-其次，
-          ...
+          <h5 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h5><p>树莓派相当于一台小型的个人电脑，所以我们在使用时通常需要外接显示器、键盘、鼠标，但通常情况下我们是将树莓派作为一个开发平台，因此单独为它弄台显示器键盘什么的非常不方便，因此我希望在自己熟悉的Windows环境下，通过远程桌面的方式链接到树莓派开发板上，这样可以使用自己电脑上的键盘鼠标，甚至是显示器为树莓派远程服务了。树莓派我昨天刚开始接触，所以远程链接方面还是绕了点弯子，下面记录下步骤以供参考。</p>
+<h5 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h5><p>首先，你的树莓派需要安装好系统，我买回来时，店家已经帮我装好在SD卡中了，安装的是树莓派官方推荐的raspbian jessie系统，版本就不提了，我想应该与后续的步骤并不太相关。</p>
+<p>其次，单独使用键盘鼠标屏幕配置你的树莓派连上网络，由于树莓派3板载WIFI模块，因此我配置它连接到我的无线路由器上面，如果是有线链接，我想应该是无需任何配置的，当然我没有尝试过。</p>
+<p><img src="/2017/01/22/Windows下远程桌面连接树莓派3代/QQ截图20170122162631.png" alt="QQ截图20170122162631"></p>
+<p>通过路由器，你能够看得到树莓派的IP地址，这个IP地址后面在远程链接时会用到</p>
+<p><img src="/2017/01/22/Windows下远程桌面连接树莓派3代/QQ截图20170122163331.png" alt="QQ截图20170122163331"></p>
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="/2017/01/22/Windows下远程桌面连接树莓派3代/#more" rel="contents">
@@ -864,10 +865,8 @@
 
       
         
-          
-          　　实际上，我07年才开始接触的互联网，当然首先接触了QQ及QQ空间，接着就开始注册并使用了新浪博客，在读大学之前，这些地方都是用来瞎写一些乱七八糟的东西，我翻看了很早的一篇新浪博客旧文，我竟然写的是关于高三模拟考试的事情，我已经很难回忆起当时为什么写这玩意写给谁会看。进入大学以后，开始接触学习一些与专业相关的知识，互联网真是个好东西，可以通过搜索引擎找到很多学习需要的资料，随后自己也想写些技术博客，一来是记录下学习过程中的关键问题方便以后自己查阅，二来也是希望将自己微薄的经验分享到互联网或许能给后来的人提供一些参考，因为人总不能一味地索取而不贡献。
-　　随后开始将自己的一些技术笔记写在新浪博
-          ...
+          <p>　　实际上，我07年才开始接触的互联网，当然首先接触了QQ及QQ空间，接着就开始注册并使用了新浪博客，在读大学之前，这些地方都是用来瞎写一些乱七八糟的东西，我翻看了很早的一篇新浪博客旧文，我竟然写的是关于高三模拟考试的事情，我已经很难回忆起当时为什么写这玩意写给谁会看。进入大学以后，开始接触学习一些与专业相关的知识，互联网真是个好东西，可以通过搜索引擎找到很多学习需要的资料，随后自己也想写些技术博客，一来是记录下学习过程中的关键问题方便以后自己查阅，二来也是希望将自己微薄的经验分享到互联网或许能给后来的人提供一些参考，因为人总不能一味地索取而不贡献。</p>
+<p>　　随后开始将自己的一些技术笔记写在新浪博客上，毕竟新浪是个大平台，写出来的博文半小时后就能被搜索引擎搜索到。当然也收获了不错的效果，我在上面留了邮箱，经常会有一些网友通过邮件与我交流相关的问题，绝大多数网友都非常有礼貌，邮件里首先会简单描述自己是xx大学xx专业的学生，目前正在学习xx，遇到xx问题，看到您的博客有些问题想探讨一下，很多情况下能跟他们成为可以经常在技术方面交流的朋友。但有些网友则不一样，他们一上来什么都不说就问你“xx代码能不能发我一份”，很遗憾这种邮件我一般不太愿意花时间回复，我认为首先应该尊重别人的劳动成果，而不是伸手就要。印象比较深刻的是，大四那年我在调试微型四轴飞行器的时候，使用ADI公司的三轴加速度传感器做了一个简单的重力感应电脑游戏遥控器的demo，然后写了一篇博文。半年以后，ADI官方在微博中私信我，说希望转载我的文章，我欣然同意，随后这篇文章收录在<a href="https://ezchina.analog.com/message/15963?commentID=15963#comment-15963">ADI官方中文技术支持论坛</a>，实际上这篇文章被很多网站都转载了，你可以百度搜索“<a href="https://www.baidu.com/s?wd=adxl345%20%E9%81%A5%E6%8E%A7%E5%99%A8&amp;rsv_spt=1&amp;rsv_iqid=0x8bf9de31000035b7&amp;issp=1&amp;f=8&amp;rsv_bp=1&amp;rsv_idx=2&amp;ie=utf-8&amp;rqlang=cn&amp;tn=baiduhome_pg&amp;rsv_enter=1&amp;oq=adxl%26lt%3B45%20%E9%87%8D%E5%8A%9B%E6%84%9F%E5%BA%94%E9%81%A5%E6%8E%A7%E5%99%A8&amp;inputT=268&amp;rsv_t=636a6DE68grcRvmdti%2FEz75cGdX8Bf2Tro4O1D07s8GCZQaq6C7LTZ7ODQWfsJxBJ%2Fu0&amp;rsv_pq=c1b60c96000012a9&amp;sug=adxl345&amp;rsv_sug3=50&amp;rsv_sug2=0&amp;rsv_sug4=3368">ADXL345 遥控器</a>”看看。因此，写技术笔记这件事情我必然是会坚持下去的。</p>
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="/2017/01/20/博客建立的初衷/#more" rel="contents">
@@ -963,7 +962,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">15</span>
+                <span class="site-state-item-count">16</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>

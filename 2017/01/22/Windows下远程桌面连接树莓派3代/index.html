@@ -100,7 +100,7 @@
 <meta property="og:image" content="etrd.org/2017/01/22/Windows下远程桌面连接树莓派3代/QQ截图20170122172629.png">
 <meta property="og:image" content="etrd.org/2017/01/22/Windows下远程桌面连接树莓派3代/QQ截图20170122172828.png">
 <meta property="og:image" content="etrd.org/2017/01/22/Windows下远程桌面连接树莓派3代/QQ截图20170123181348.png">
-<meta property="og:updated_time" content="2017-01-23T10:21:20.942Z">
+<meta property="og:updated_time" content="2017-01-26T05:26:55.604Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Windows下远程桌面连接树莓派3代">
 <meta name="twitter:description" content="引言树莓派相当于一台小型的个人电脑，所以我们在使用时通常需要外接显示器、键盘、鼠标，但通常情况下我们是将树莓派作为一个开发平台，因此单独为它弄台显示器键盘什么的非常不方便，因此我希望在自己熟悉的Windows环境下，通过远程桌面的方式链接到树莓派开发板上，这样可以使用自己电脑上的键盘鼠标，甚至是显示器为树莓派远程服务了。树莓派我昨天刚开始接触，所以远程链接方面还是绕了点弯子，下面记录下步骤以供参考">
@@ -394,6 +394,7 @@
 <p><img src="/2017/01/22/Windows下远程桌面连接树莓派3代/QQ截图20170122162631.png" alt="QQ截图20170122162631"></p>
 <p>通过路由器，你能够看得到树莓派的IP地址，这个IP地址后面在远程链接时会用到</p>
 <p><img src="/2017/01/22/Windows下远程桌面连接树莓派3代/QQ截图20170122163331.png" alt="QQ截图20170122163331"></p>
+<a id="more"></a>
 <h5 id="更改系统源的镜像源"><a href="#更改系统源的镜像源" class="headerlink" title="更改系统源的镜像源"></a>更改系统源的镜像源</h5><p>Windows自带远程桌面链接（Remote Desktop Connection）的功能，但是树莓派的系统里面需要安装两个相关的服务。xrdp 和 tightvncserver。</p>
 <p>需要在raspbian 系统的命令终端中执行下面两个命令：</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install xrdp</span><br><span class="line">sudo apt-get install tightvncserver</span><br></pre></td></tr></table></figure>
@@ -603,7 +604,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">15</span>
+                <span class="site-state-item-count">16</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>

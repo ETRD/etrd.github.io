@@ -68,7 +68,7 @@
 <link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Windows,visual studio,visualGDB,树莓派应用程序," />
+  <meta name="keywords" content="Windows,visual studio,visualGDB,树莓派应用程序,Raspbian," />
 
 
 
@@ -92,6 +92,7 @@
 <meta property="og:site_name" content="ETRD博客">
 <meta property="og:description" content="引言摸索了几天树莓派，基本对其有了一个基本而肤浅的了解，前面已经实现了在Windows下对树莓派进行远程桌面连接，因此我已经迫不及待的希望开始对其进行应用开发了，我牢记着自己的目标，是要在上面实现一个全是C代码的工程，而不是纯粹来玩这么一个小型的电脑，因此相同功能的实现方法我似乎没有太多的选择，我的选择只有一个，就是在上面运行一个C语言的工程。
 因此，如何开发在树莓派上运行的C程序，以及用什么ID">
+<meta property="og:image" content="etrd.org/2017/01/25/Windows下建立第一个树莓派应用程序/QQ截图20170126130028.png">
 <meta property="og:image" content="etrd.org/2017/01/25/Windows下建立第一个树莓派应用程序/QQ截图20170125193020.png">
 <meta property="og:image" content="etrd.org/2017/01/25/Windows下建立第一个树莓派应用程序/QQ截图20170125211401.png">
 <meta property="og:image" content="etrd.org/2017/01/25/Windows下建立第一个树莓派应用程序/QQ截图20170125212417.png">
@@ -108,12 +109,12 @@
 <meta property="og:image" content="etrd.org/2017/01/25/Windows下建立第一个树莓派应用程序/QQ截图20170125220409.png">
 <meta property="og:image" content="etrd.org/2017/01/25/Windows下建立第一个树莓派应用程序/QQ截图20170125220535.png">
 <meta property="og:image" content="etrd.org/2017/01/25/Windows下建立第一个树莓派应用程序/QQ截图20170125220639.png">
-<meta property="og:updated_time" content="2017-01-25T14:38:14.299Z">
+<meta property="og:updated_time" content="2017-01-26T05:25:15.909Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Windows下建立第一个树莓派应用程序">
 <meta name="twitter:description" content="引言摸索了几天树莓派，基本对其有了一个基本而肤浅的了解，前面已经实现了在Windows下对树莓派进行远程桌面连接，因此我已经迫不及待的希望开始对其进行应用开发了，我牢记着自己的目标，是要在上面实现一个全是C代码的工程，而不是纯粹来玩这么一个小型的电脑，因此相同功能的实现方法我似乎没有太多的选择，我的选择只有一个，就是在上面运行一个C语言的工程。
 因此，如何开发在树莓派上运行的C程序，以及用什么ID">
-<meta name="twitter:image" content="etrd.org/2017/01/25/Windows下建立第一个树莓派应用程序/QQ截图20170125193020.png">
+<meta name="twitter:image" content="etrd.org/2017/01/25/Windows下建立第一个树莓派应用程序/QQ截图20170126130028.png">
 
 
 
@@ -398,63 +399,66 @@
 
       
         <h4 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h4><p>摸索了几天树莓派，基本对其有了一个基本而肤浅的了解，前面已经实现了在Windows下对树莓派进行远程桌面连接，因此我已经迫不及待的希望开始对其进行应用开发了，我牢记着自己的目标，是要在上面实现一个全是C代码的工程，而不是纯粹来玩这么一个小型的电脑，因此相同功能的实现方法我似乎没有太多的选择，我的选择只有一个，就是在上面运行一个C语言的工程。</p>
-<p>因此，如何开发在树莓派上运行的C程序，以及用什么IDE开发，在什么个系统下开发成了核心的几个问题。</p>
-<h4 id="树莓派基础"><a href="#树莓派基础" class="headerlink" title="树莓派基础"></a>树莓派基础</h4><h5 id="Raspbian系统"><a href="#Raspbian系统" class="headerlink" title="Raspbian系统"></a>Raspbian系统</h5><p>Raspbian是基于Debian Linux的一个系统，因此我理解它就是一个基于Linux的系统，只是针对树莓派这个平台做了相应的优化和修改。Raspbian又分Raspbian Wheezy和Raspbian Jessie两个版本，原因是它们基于的Debian的版本不同，Raspbian Wheezy基于Debian Wheezy，Raspbian Jessie基于Debian Jessie，现在较新的是基于Raspbian Jessie的Raspbian Jessie系统，我现在的树莓派安装就是这个系统，是3-18号以后的版本。因此我的理解是Linux衍生出了Debian Jessie，Debian Jessie又衍生出了Raspbian Jessie。因此我觉得开发在Raspbian Jessie上运行的应用程序实际上是开发在Linux上运行的应用程序，但很遗憾，我还未曾正式接触过Linux，因此即使弄清楚了这个关系，我也还是从0开始。</p>
-<h5 id="目前的开发现状"><a href="#目前的开发现状" class="headerlink" title="目前的开发现状"></a>目前的开发现状</h5><p>这几天我不断的在Google树莓派开发的资料，我发现普遍使用的是C语言和Python语言，而这两者中Python又似乎占比比较大，这对我而言似乎不是一个好消息，因为我的代码是C的，而且Python关键我也不会。但也不是很糟，起码C语言用了这么多年还是可以继续用的。因此我又着重看了在不少在用C语言开发树莓派程序的资料，或许是我搜索的关键字还不对，我发现他们的教程里面基本都是在树莓派本身的系统下直接在编写一个C源文件，然后通过终端使用相关指令编译运行。这显然不适合我，如果是只有一个c文件的工程，且这个文件只有十几行代码，我还可以接受，可我的是一个包含几十个c文件的大工程，我如何进行有序的管理？虽然我不是一个程序员，但也写过不代码，这些代码就是在有良好的交互界面IDE下开发的，例如VC6.0，Keil，IAR等，让我突然脱离IDE我很能办到。</p>
-<p>因此我的目标又进一步明确，我必须要使用C语言，需要一个IDE的开发环境，且是在Windows平台开发。</p>
+<p>因此，如何开发在树莓派上运行的C程序，以及用什么IDE(集成开发环境)开发，在什么个系统下开发成了核心的几个问题。</p>
+<h4 id="树莓派基础"><a href="#树莓派基础" class="headerlink" title="树莓派基础"></a>树莓派基础</h4><h5 id="Raspbian系统"><a href="#Raspbian系统" class="headerlink" title="Raspbian系统"></a>Raspbian系统</h5><p>Raspbian是基于Debian Linux的一个系统，因此我理解它就是一个基于Linux的系统，只是针对树莓派这个平台做了相应的优化和修改。Raspbian又分Raspbian Wheezy和Raspbian Jessie两个版本，原因是它们基于的Debian的版本不同，Raspbian Wheezy基于Debian Wheezy，Raspbian Jessie基于Debian Jessie，现在较新的是基于Debian Jessie的Raspbian Jessie系统，我现在的树莓派安装就是这个系统，是3-18号以后的版本。因此我的理解是Linux衍生出了Debian Jessie，Debian Jessie又衍生出了Raspbian Jessie。因此我觉得开发在Raspbian Jessie上运行的应用程序实际上是开发在Linux上运行的应用程序，但很遗憾，我还未曾正式接触过Linux，因此即使弄清楚了这个关系，我也还是从0开始。</p>
+<a id="more"></a>
+<h5 id="目前的开发现状"><a href="#目前的开发现状" class="headerlink" title="目前的开发现状"></a>目前的开发现状</h5><p>这几天我不断的在Google树莓派开发的资料，我发现普遍使用的是C语言和Python语言，而这两者中Python又似乎占比比较大，这对我而言似乎不是一个好消息，因为我的代码是C的，而且Python关键我也不会。但也不是很糟，起码C语言用了这么多年还是可以继续用的。因此我又着重看了在不少在用C语言开发树莓派程序的资料，或许是我搜索的关键字还不对，我发现他们的教程里面基本都是在树莓派本身的系统下直接在编写一个C源文件，然后通过终端使用相关指令编译运行。这显然不适合我，如果是只有一个c文件的工程，且这个文件只有十几行代码，我还可以接受，可我的是一个包含几十个c文件的大工程，我如何进行有序的管理？虽然我不是一个程序员，但也写过不代码，这些代码都是在有良好的交互界面IDE下开发的，例如VC6.0，Keil，IAR等，让我突然脱离IDE我很能办到。</p>
+<p>因此我的目标又进一步明确，我必须要使用C语言，需要一个IDE的开发环境，且是在Windows平台下开发。</p>
 <h4 id="交叉编译"><a href="#交叉编译" class="headerlink" title="交叉编译"></a>交叉编译</h4><p>想在Windows下开发Linux上运行的程序，就需要引入交叉编译的概念，交叉编译就是在一个平台使用交叉编译工具编译出可以在另外一个平台上运行的可执行程序。而树莓派的Raspbian系统本身已经自带集成了Linux的编译器，因此它本身就是大开发环境，所以它才能直接在终端调用指令编译.c的源文件。因此实际上有两种方法在windows下开发，一种是将代码在Windows下写好以后，copy到树莓派中，由树莓派使用自身的编译工具进行编译链接生成可执行文件；另一种则是在Windows下使用交叉编译工具直接编译生成可以在树莓派上运行的可执行文件。显然第二种更符合我的需求。</p>
-<h4 id="VisualGDB工具"><a href="#VisualGDB工具" class="headerlink" title="VisualGDB工具"></a>VisualGDB工具</h4><p>VisualGDB是一个为Windows上的Visual Studio准备的插件，目前支持Visual Studio 2008~1017，有了这款插件，Visual Studio便可以开发linux程序了。它实际上是在Visual Studio中帮你配置好交叉编译的工具，并且它还可以帮你使用SSH远程连接上你的树莓派。</p>
-<h4 id="环境搭建步骤"><a href="#环境搭建步骤" class="headerlink" title="环境搭建步骤"></a>环境搭建步骤</h4><ol>
+<h4 id="VisualGDB工具"><a href="#VisualGDB工具" class="headerlink" title="VisualGDB工具"></a>VisualGDB工具</h4><p>VisualGDB是一个为Windows上的Visual Studio准备的插件，目前支持Visual Studio 2008~2017，有了这款插件，Visual Studio便可以开发linux程序了。它实际上是在Visual Studio中帮你配置好交叉编译的工具，并且它还可以帮你使用SSH远程连接上你的树莓派。</p>
+<h4 id="环境搭建步骤"><a href="#环境搭建步骤" class="headerlink" title="环境搭建步骤"></a>环境搭建步骤</h4><ul>
 <li>安装Visual Studio 2008~2017的任意版本，我电脑里之前已经装好了2013版本。</li>
 <li>从VisualGDB的<a href="http://visualgdb.com/download/" target="_blank" rel="external">官网下载</a>VisualGDB的试用版本，进行安装。</li>
-<li>从GNU工具链下载为<a href="http://gnutoolchains.com/raspberry/" target="_blank" rel="external">Raspberry/PI准备的Windows下的工具链</a>，并安装。</li>
-</ol>
+<li>从GNU工具链下载为<a href="http://gnutoolchains.com/raspberry/" target="_blank" rel="external">Raspberry/PI准备的Windows下的工具链</a>。</li>
+</ul>
+<p><img src="/2017/01/25/Windows下建立第一个树莓派应用程序/QQ截图20170126130028.png" alt="QQ截图20170126130028"></p>
+<p>根据树莓派的系统选择合适的最新的编译工具链，并下载安装。</p>
 <p><img src="/2017/01/25/Windows下建立第一个树莓派应用程序/QQ截图20170125193020.png" alt="QQ截图20170125193020"></p>
-<p>所有安装完成后，打开Visual Studio中会多出VisualGDB的东西，例如帮助菜单下，多了一个 About VisualGDB：</p>
+<p>所有安装完成后，打开Visual Studio中会多出VisualGDB的东西，例如帮助菜单下，多了一项 About VisualGDB：</p>
 <p><img src="/2017/01/25/Windows下建立第一个树莓派应用程序/QQ截图20170125211401.png" alt="QQ截图20170125211401"></p>
-<h4 id="建立第一个工程"><a href="#建立第一个工程" class="headerlink" title="建立第一个工程"></a>建立第一个工程</h4><ol>
-<li>打开VS，文件/新建/项目</li>
-</ol>
+<h4 id="建立第一个工程"><a href="#建立第一个工程" class="headerlink" title="建立第一个工程"></a>建立第一个工程</h4><blockquote>
+<p>打开VS，文件/新建/项目</p>
+</blockquote>
 <p><img src="/2017/01/25/Windows下建立第一个树莓派应用程序/QQ截图20170125212417.png" alt="QQ截图20170125212417"></p>
-<ol>
-<li>左侧选择VisualGDB，中间选择Linux Project Wizard，下方配置工程名及工程存放目录</li>
-</ol>
+<blockquote>
+<p>左侧选择VisualGDB，中间选择Linux Project Wizard，下方配置工程名及工程存放目录</p>
+</blockquote>
 <p><img src="/2017/01/25/Windows下建立第一个树莓派应用程序/QQ截图20170125213152.png" alt="QQ截图20170125213152"></p>
-<ol>
-<li>接下来，选择创建Application(executable file)/Use MSBuild，点next，其它几个我目前也还不知道是个什么意思</li>
-</ol>
+<blockquote>
+<p>接下来，选择创建Application(executable file)/Use MSBuild，点next，其它几个我目前也还不知道是个什么意思</p>
+</blockquote>
 <p><img src="/2017/01/25/Windows下建立第一个树莓派应用程序/QQ截图20170125213318.png" alt="QQ截图20170125213318"></p>
-<ol>
-<li>接下来便出现了两种选择：</li>
-</ol>
+<blockquote>
+<p>接下来便出现了两种选择：</p>
+</blockquote>
 <p><img src="/2017/01/25/Windows下建立第一个树莓派应用程序/QQ截图20170125213629.png" alt="QQ截图20170125213629"></p>
-<p>这实际上就是前面提到的两种方案，第一种是只在Windows管理工程，编写代码，工程通过网络传送到Linux的电脑上进行编译，第二种中是使用交叉编译工具在在本地进行编译。不管是选择哪一种，此时，请将你的树莓派上电运行，并确保它与我们的电脑处于同一局域网中，并清楚它的IP地址，还需要确保树莓派的SSH处于默认开启状态，因为马上要使用SSH进行远程登录链接了。</p>
+<p>这实际上就是前面提到的两种方案，第一种是只在Windows管理工程，编写代码，源文件通过网络传送到Linux的电脑上进行编译，第二种是使用交叉编译工具在在本地进行编译，然后将生产的可执行文件通过网络传送到Linux电脑上进行运行。不管是选择哪一种，此时，请将你的树莓派上电运行，并确保它与我们的电脑处于同一局域网中，并清楚它的IP地址，还需要确保树莓派的SSH处于默认开启状态，因为马上要使用SSH进行远程登录链接了。</p>
 <p>下面是选择第一种方案时：</p>
 <p><img src="/2017/01/25/Windows下建立第一个树莓派应用程序/QQ截图20170125213851.png" alt="QQ截图20170125213851"></p>
 <p>这种情况，你需要填入树莓派的IP地址，然后配置好登录的用户名和密码即可，用户名和密码跟前一篇文章中提到的远程桌面的登陆用户名和密码一样的。此时应该会自动获取树莓派的工具链信息，之前也提到树莓派的系统本身已经相当于一个大的编译环境了，选择这种情况的话，实际上你并不需要安装前面步骤中提到的交叉工具链，因为代码是传到树莓派中在远程编译链接的。</p>
 <p>这是选择第二种方案</p>
 <p><img src="/2017/01/25/Windows下建立第一个树莓派应用程序/QQ截图20170125214734.png" alt="QQ截图20170125214734"></p>
-<p>这种方案必须使用交叉编译工具链，由于前面安装了，这里会自动检测到，选择一下即可。特别说明的是，如果你在没有安装交叉编译工具链的情况下到了这个步骤，VisualGDB会帮你下载安装，但是非常慢且下载失败会全部重新下，因此建议按照我前面说的方法直接去下载交叉工具链，用迅雷下载快，然后自行安装。下面这个截图就是血淋淋的教训，我下载了三个小时竟然又从头开始下载了。</p>
+<p>这种方案必须使用交叉编译工具链，由于前面安装了，这里会自动检测到，选择一下即可。特别说明的是，如果你在没有安装交叉编译工具链的情况下到了这个步骤，VisualGDB会帮你下载安装，但是非常慢且下载失败会全部重新下，因此建议按照我前面说的方法直接去下载交叉工具链，用迅雷下载快，然后自行安装。下面这个截图就是我亲自走的弯路，下载了三个小时竟然又从头开始下载了。</p>
 <p><img src="/2017/01/25/Windows下建立第一个树莓派应用程序/QQ截图20170125164612.png" alt="QQ截图20170125164612"></p>
-<p>然后同样配置SSH连接，同时可以看到选择Deployment folder，这个目录是交叉编译好的树莓派上可直接执行的文件传到树莓派上存放的地方，可以记下来/tmp，待会去看看。</p>
+<p>然后同样配置SSH连接，同时可以看到选择Deployment folder，这个目录是交叉编译好的树莓派上可直接执行的文件传到树莓派上存放的地方，可以记下来路径：/tmp，待会去看看。</p>
 <p>这里我选择的是第二种方案。</p>
-<h4 id="Windows下编译调试"><a href="#Windows下编译调试" class="headerlink" title="Windows下编译调试"></a>Windows下编译调试</h4><ol>
-<li>在工程默认创建的cpp文件中输入如下代码：</li>
-</ol>
+<h4 id="Windows下编译调试"><a href="#Windows下编译调试" class="headerlink" title="Windows下编译调试"></a>Windows下编译调试</h4><blockquote>
+<p>在工程默认创建的cpp文件中输入如下代码：</p>
+</blockquote>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span> *argv[])</span></span><br><span class="line"></span>&#123;</span><br><span class="line">	<span class="keyword">char</span> sz[] = <span class="string">"Hello, World! by launcher"</span>;	<span class="comment">//Hover mouse over "sz" while debugging to see its contents</span></span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; sz &lt;&lt; <span class="built_in">endl</span>;	<span class="comment">//&lt;================= Put a breakpoint here</span></span><br><span class="line">	getchar();</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<ol>
-<li>根据提示，设下一个断点：</li>
-</ol>
+<blockquote>
+<p>根据提示，设下一个断点：</p>
+</blockquote>
 <p><img src="/2017/01/25/Windows下建立第一个树莓派应用程序/QQ截图20170125215426.png" alt="QQ截图20170125215426"></p>
-<ol>
-<li>点击Debug按钮：</li>
-</ol>
+<blockquote>
+<p>点击Debug按钮：</p>
+</blockquote>
 <p><img src="/2017/01/25/Windows下建立第一个树莓派应用程序/QQ截图20170125215514.png" alt="QQ截图20170125215514"></p>
 <p>此时程序启动，并停留在断点处，选择右下方的<strong>输出</strong>标签进行查看观察输出信息：</p>
 <p><img src="/2017/01/25/Windows下建立第一个树莓派应用程序/QQ截图20170125215849.png" alt="QQ截图20170125215849"></p>
-<ol>
-<li>F10单步执行，即可看到程序输出信息</li>
-</ol>
+<blockquote>
+<p>F10单步执行，即可看到程序输出信息</p>
+</blockquote>
 <p><img src="/2017/01/25/Windows下建立第一个树莓派应用程序/QQ截图20170125215955.png" alt="QQ截图20170125215955"></p>
 <h4 id="树莓派中查看和验证可执行程序"><a href="#树莓派中查看和验证可执行程序" class="headerlink" title="树莓派中查看和验证可执行程序"></a>树莓派中查看和验证可执行程序</h4><p>前面Windows下的调试真的是运行在树莓派中的吗，太过方便反而觉得有点忐忑，所以通过远程桌面直接查看树莓派中的程序，还记得前面提到的Deployment folder文件夹/tmp，打开目录看看</p>
 <p><img src="/2017/01/25/Windows下建立第一个树莓派应用程序/QQ截图20170125220409.png" alt="QQ截图20170125220409"></p>
@@ -498,6 +502,8 @@
             <a href="/tags/visualGDB/" rel="tag"># visualGDB</a>
           
             <a href="/tags/树莓派应用程序/" rel="tag"># 树莓派应用程序</a>
+          
+            <a href="/tags/Raspbian/" rel="tag"># Raspbian</a>
           
         </div>
       
@@ -625,7 +631,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">15</span>
+                <span class="site-state-item-count">16</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
