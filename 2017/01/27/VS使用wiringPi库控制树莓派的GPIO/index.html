@@ -68,7 +68,7 @@
 <link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="visual studio,visualGDB,wiringPi,GPIO," />
+  <meta name="keywords" content="wiringPi,visual studio,visualGDB,GPIO," />
 
 
 
@@ -107,9 +107,10 @@
 <meta property="og:image" content="etrd.org/2017/01/27/VS使用wiringPi库控制树莓派的GPIO/QQ截图20170127160354.png">
 <meta property="og:image" content="etrd.org/2017/01/27/VS使用wiringPi库控制树莓派的GPIO/QQ截图20170127162850.png">
 <meta property="og:image" content="etrd.org/2017/01/27/VS使用wiringPi库控制树莓派的GPIO/QQ截图20170127163121.png">
+<meta property="og:image" content="etrd.org/2017/01/27/VS使用wiringPi库控制树莓派的GPIO/QQ截图20170216172831.png">
 <meta property="og:image" content="etrd.org/2017/01/27/VS使用wiringPi库控制树莓派的GPIO/QQ截图20170127160505.png">
 <meta property="og:image" content="etrd.org/2017/01/27/VS使用wiringPi库控制树莓派的GPIO/QQ截图20170127160616.png">
-<meta property="og:updated_time" content="2017-01-27T09:19:59.529Z">
+<meta property="og:updated_time" content="2017-02-16T09:29:50.069Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="VS使用wiringPi库控制树莓派的GPIO">
 <meta name="twitter:description" content="引言前面我们已经实现了在Windows下使用VS建立工程并利用交叉编译工具链可以编译生成在树莓派上可以运行的程序。众所周知，现在各个研发公司完全从0开始做开发已经不常见了，较为普遍的是基于一些已有的代码来加速开发自己的应用。同样的，很多具有开源精神的技术牛人为树莓派或者说Linux写了很多库，不管是不是开源的，它们编写的初衷都是将这些库直接安装到对应的系统中，由对应的系统进行调用的。那我们使用交叉">
@@ -466,6 +467,8 @@
 <p><img src="/2017/01/27/VS使用wiringPi库控制树莓派的GPIO/QQ截图20170127162850.png" alt="QQ截图20170127162850"></p>
 <p>否则调用库函数时会提示没有定义的错误，这实际上在树莓派中安装wiringpi时执行./build命令是提示了</p>
 <p><img src="/2017/01/27/VS使用wiringPi库控制树莓派的GPIO/QQ截图20170127163121.png" alt="QQ截图20170127163121"></p>
+<p>同样的，如果你的工程中用到线程创建函数，你同样需要填入线程库的名称，否则会提示pthread_create未定义的错误，这是一个写入了线程库的例子：</p>
+<p><img src="/2017/01/27/VS使用wiringPi库控制树莓派的GPIO/QQ截图20170216172831.png" alt="QQ截图20170216172831"></p>
 <p>此时程序中错误消失，且wiringpi.h的引用为最新的头文件</p>
 <p><img src="/2017/01/27/VS使用wiringPi库控制树莓派的GPIO/QQ截图20170127160505.png" alt="QQ截图20170127160505"></p>
 <p><img src="/2017/01/27/VS使用wiringPi库控制树莓派的GPIO/QQ截图20170127160616.png" alt="QQ截图20170127160616"></p>
@@ -499,11 +502,11 @@
       
         <div class="post-tags">
           
+            <a href="/tags/wiringPi/" rel="tag"># wiringPi</a>
+          
             <a href="/tags/visual-studio/" rel="tag"># visual studio</a>
           
             <a href="/tags/visualGDB/" rel="tag"># visualGDB</a>
-          
-            <a href="/tags/wiringPi/" rel="tag"># wiringPi</a>
           
             <a href="/tags/GPIO/" rel="tag"># GPIO</a>
           
@@ -619,7 +622,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-count">7</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -637,7 +640,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">22</span>
+                <span class="site-state-item-count">25</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>

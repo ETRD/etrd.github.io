@@ -92,7 +92,7 @@
 <meta property="og:description" content="引言树莓派相当于一台小型的个人电脑，所以我们在使用时通常需要外接显示器、键盘、鼠标，但通常情况下我们是将树莓派作为一个开发平台，因此单独为它弄台显示器键盘什么的非常不方便，因此我希望在自己熟悉的Windows环境下，通过远程桌面的方式链接到树莓派开发板上，这样可以使用自己电脑上的键盘鼠标，甚至是显示器为树莓派远程服务了。树莓派我昨天刚开始接触，所以远程链接方面还是绕了点弯子，下面记录下步骤以供参考">
 <meta property="og:image" content="etrd.org/2017/01/22/Windows下远程桌面连接树莓派3代/QQ截图20170122162631.png">
 <meta property="og:image" content="etrd.org/2017/01/22/Windows下远程桌面连接树莓派3代/QQ截图20170122163331.png">
-<meta property="og:image" content="etrd.org/2017/01/22/Windows下远程桌面连接树莓派3代/QQ截图20170122165710.png">
+<meta property="og:image" content="etrd.org/2017/01/22/Windows下远程桌面连接树莓派3代/QQ截图20170219134134.png">
 <meta property="og:image" content="etrd.org/2017/01/22/Windows下远程桌面连接树莓派3代/QQ截图20170122171533.png">
 <meta property="og:image" content="etrd.org/2017/01/22/Windows下远程桌面连接树莓派3代/QQ截图20170122172104.png">
 <meta property="og:image" content="etrd.org/2017/01/22/Windows下远程桌面连接树莓派3代/QQ截图20170122172233.png">
@@ -100,7 +100,7 @@
 <meta property="og:image" content="etrd.org/2017/01/22/Windows下远程桌面连接树莓派3代/QQ截图20170122172629.png">
 <meta property="og:image" content="etrd.org/2017/01/22/Windows下远程桌面连接树莓派3代/QQ截图20170122172828.png">
 <meta property="og:image" content="etrd.org/2017/01/22/Windows下远程桌面连接树莓派3代/QQ截图20170123181348.png">
-<meta property="og:updated_time" content="2017-01-26T05:26:55.604Z">
+<meta property="og:updated_time" content="2017-02-19T05:46:24.355Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Windows下远程桌面连接树莓派3代">
 <meta name="twitter:description" content="引言树莓派相当于一台小型的个人电脑，所以我们在使用时通常需要外接显示器、键盘、鼠标，但通常情况下我们是将树莓派作为一个开发平台，因此单独为它弄台显示器键盘什么的非常不方便，因此我希望在自己熟悉的Windows环境下，通过远程桌面的方式链接到树莓派开发板上，这样可以使用自己电脑上的键盘鼠标，甚至是显示器为树莓派远程服务了。树莓派我昨天刚开始接触，所以远程链接方面还是绕了点弯子，下面记录下步骤以供参考">
@@ -418,8 +418,9 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo cp /etc/apt/sources.list /etc/apt/sources.list.bak  #备份为 sources.list.bak</span><br><span class="line">sudo nano /etc/apt/sources.list                          #编辑sources.list  文件</span><br></pre></td></tr></table></figure>
 <p>值得说明的是，即使raspbian 系统是可视化的可以直接到对应文件目录下用文本编辑器打开修改list文件，但可能是没有办法进行保存操作的，因此还是推荐在终端中使用sudo命令行进行编辑。</p>
 <p>输入国内<a href="http://mirrors.aliyun.com/" target="_blank" rel="external">阿里云的镜像</a>源地址：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">deb http://mirrors.aliyun.com/raspbian/raspbian/ wheezy main non-free contrib</span><br><span class="line">deb-src http://mirrors.aliyun.com/raspbian/raspbian/ wheezy main non-free contrib</span><br></pre></td></tr></table></figure>
-<p><img src="/2017/01/22/Windows下远程桌面连接树莓派3代/QQ截图20170122165710.png" alt="QQ截图20170122165710"></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">deb http://mirrors.aliyun.com/raspbian/raspbian/ jessie main non-free contrib</span><br><span class="line">deb-src http://mirrors.aliyun.com/raspbian/raspbian/ jessie main non-free contrib</span><br></pre></td></tr></table></figure>
+<p>需要特别注意！上面的jessie这个属性要与你的系统相匹配！如果你的系统基于Debian jessie的就写jessie，如果是基于Debian wheezy的就写wheezy。我之前犯了错误，我的系统是jessie的但是却复制别人的写了wheezy，导致后来我安装QT5始终找不到安装包！</p>
+<p><img src="/2017/01/22/Windows下远程桌面连接树莓派3代/QQ截图20170219134134.png" alt="QQ截图20170219134134"></p>
 <p>然后使用Ctrl+O写入，Ctrl+X退出编辑器。</p>
 <p>接着，你必须要使用如下两条指令来更新系统软件和更新已安装的包，实际上我并未执行第二条，而只执行了更新系统软件这条指令。如果我修改list文件后试图直接执行xrdp和tightvncserver的安装指令，似乎上面修改的镜像源不会立即生效，会提示没有找到安装包等问题。因此建议是执行以下第一条更新系统软件的指令：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get update       #更新系统软件（本笔记中我只执行了这条）</span><br><span class="line">sudo apt-get upgrade       #更新已安装的包（这条未执行）</span><br></pre></td></tr></table></figure>
@@ -433,6 +434,7 @@
 <p><img src="/2017/01/22/Windows下远程桌面连接树莓派3代/QQ截图20170122171533.png" alt="QQ截图20170122171533"></p>
 <p>选择Change User Password可以修改pi账户的密码。</p>
 <p>值得提醒的是Advance Options中有一项Hostname的配置，那个不是指的登陆账户的名称，而是类似于电脑的名称。</p>
+<h5 id="重启树莓派"><a href="#重启树莓派" class="headerlink" title="重启树莓派"></a>重启树莓派</h5><p>完成以上配置以后，记得重启一下树莓派，再进行下面的Windows远程连接。</p>
 <h5 id="在Windows下远程链接"><a href="#在Windows下远程链接" class="headerlink" title="在Windows下远程链接"></a>在Windows下远程链接</h5><p>在Windows下找到远程桌面连接的程序</p>
 <p><img src="/2017/01/22/Windows下远程桌面连接树莓派3代/QQ截图20170122172104.png" alt="QQ截图20170122172104"></p>
 <p>输入树莓派的IP地址，前面提到了在路由器中看树莓派IP地址的方法</p>
@@ -597,7 +599,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-count">7</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -615,7 +617,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">22</span>
+                <span class="site-state-item-count">25</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
@@ -724,7 +726,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-5"><a class="nav-link" href="#引言"><span class="nav-number">1.</span> <span class="nav-text">引言</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#准备工作"><span class="nav-number">2.</span> <span class="nav-text">准备工作</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#更改系统源的镜像源"><span class="nav-number">3.</span> <span class="nav-text">更改系统源的镜像源</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#安装远程登录服务"><span class="nav-number">4.</span> <span class="nav-text">安装远程登录服务</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#配置树莓派账户的远程登录密码"><span class="nav-number">5.</span> <span class="nav-text">配置树莓派账户的远程登录密码</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#在Windows下远程链接"><span class="nav-number">6.</span> <span class="nav-text">在Windows下远程链接</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#调整远程桌面的分辨率"><span class="nav-number">7.</span> <span class="nav-text">调整远程桌面的分辨率</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#参考文献："><span class="nav-number">8.</span> <span class="nav-text">参考文献：</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-5"><a class="nav-link" href="#引言"><span class="nav-number">1.</span> <span class="nav-text">引言</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#准备工作"><span class="nav-number">2.</span> <span class="nav-text">准备工作</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#更改系统源的镜像源"><span class="nav-number">3.</span> <span class="nav-text">更改系统源的镜像源</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#安装远程登录服务"><span class="nav-number">4.</span> <span class="nav-text">安装远程登录服务</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#配置树莓派账户的远程登录密码"><span class="nav-number">5.</span> <span class="nav-text">配置树莓派账户的远程登录密码</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#重启树莓派"><span class="nav-number">6.</span> <span class="nav-text">重启树莓派</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#在Windows下远程链接"><span class="nav-number">7.</span> <span class="nav-text">在Windows下远程链接</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#调整远程桌面的分辨率"><span class="nav-number">8.</span> <span class="nav-text">调整远程桌面的分辨率</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#参考文献："><span class="nav-number">9.</span> <span class="nav-text">参考文献：</span></a></li></ol></div>
             
 
           </div>
