@@ -97,7 +97,7 @@
 <meta property="og:image" content="etrd.org/2017/02/20/使用VNCviewer远程访问树莓派的HDMI输出桌面/QQ截图20170220204901.png">
 <meta property="og:image" content="etrd.org/2017/02/20/使用VNCviewer远程访问树莓派的HDMI输出桌面/QQ截图20170220205525.png">
 <meta property="og:image" content="etrd.org/2017/02/20/使用VNCviewer远程访问树莓派的HDMI输出桌面/QQ截图20170220210018.png">
-<meta property="og:updated_time" content="2017-02-20T13:16:43.109Z">
+<meta property="og:updated_time" content="2017-02-20T14:47:21.246Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="使用VNCviewer远程访问树莓派的HDMI输出桌面">
 <meta name="twitter:description" content="引言之前的文章里有实现在Windows下通过微软自带的远程桌面，可以通过pi用户远程登录到树莓派上的方法，实现本机PC对树莓派的相关操作。但实际上通过这种方法访问的树莓派桌面与树莓派HDMI口输出的真实桌面是不同的，它们似乎是只共享了存储和文件而已，它们的桌面实际上是不一样的。如果需要查看并且操作树莓派真实的HDMI输出桌面，一种方法是给它接上屏幕、鼠标、键盘。另一种方法是可以通过在树莓派上安装x">
@@ -442,11 +442,15 @@
 <h4 id="Android手机安装VNC-Viewer"><a href="#Android手机安装VNC-Viewer" class="headerlink" title="Android手机安装VNC Viewer"></a>Android手机安装VNC Viewer</h4><p><img src="/2017/02/20/使用VNCviewer远程访问树莓派的HDMI输出桌面/QQ截图20170220205525.png" alt="QQ截图20170220205525"></p>
 <p>同样手机与树莓派处于同一局域网下，这是手机上的显示效果：</p>
 <p><img src="/2017/02/20/使用VNCviewer远程访问树莓派的HDMI输出桌面/QQ截图20170220210018.png" alt="QQ截图20170220210018"></p>
+<p>如果你没有路由器，或者说在户外工作，你完全可以用手机作为热点发射wifi，树莓派会自动连接（测试发现前提是你的树莓派之前最后一次连接的是你手机的热点），这样你的手机和树莓派可以满足在同一局域网的条件了，接下你需要知道树莓派的IP地址，这个一般的Android系统似乎无法直接查看，但实际上这些信息存在于手机的目录：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/proc/net/arp</span><br></pre></td></tr></table></figure>
+<p>有人已经写好了一个小工具直接读取的，附上<a href="http://pan.baidu.com/s/1qYDBEJa" target="_blank" rel="external">下载链接</a>，谢谢作者。</p>
 <p><strong>需要注意的是，Windows端和Android端同时只能有一个进行连接</strong> 。</p>
 <h4 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h4><p>本文给出了Windows下和Android下通过VNC Viewer远程连接操作树莓派3真实HDMI输出桌面的方法，有利于在Windows下开发和仿真调试在树莓派上运行的Qt界面程序，同时也完全可以代替原来的Windows通过微软自带的远程桌面连接树莓派进行操作的方法。</p>
 <h4 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h4><p><a href="https://www.raspberrypi.org/forums/viewtopic.php?p=108862#p108862" target="_blank" rel="external">https://www.raspberrypi.org/forums/viewtopic.php?p=108862#p108862</a></p>
 <p><a href="http://raspberrypi.stackexchange.com/questions/9590/tightvncserver-show-the-same-screen-on-hdmi-and-vncclient" target="_blank" rel="external">http://raspberrypi.stackexchange.com/questions/9590/tightvncserver-show-the-same-screen-on-hdmi-and-vncclient</a></p>
 <p><a href="https://www.realvnc.com/" target="_blank" rel="external">https://www.realvnc.com/</a></p>
+<p><a href="http://android-er.blogspot.com/2015/12/display-wifi-hotspot-clients-by-cat.html" target="_blank" rel="external">http://android-er.blogspot.com/2015/12/display-wifi-hotspot-clients-by-cat.html</a></p>
 
       
     </div>
