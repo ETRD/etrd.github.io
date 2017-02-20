@@ -68,7 +68,7 @@
 <link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="树莓派3B,Qt5,raspbian jessie,交叉编译," />
+  <meta name="keywords" content="VNC Viewer,HDMI,桌面," />
 
 
 
@@ -84,33 +84,24 @@
 
 
 
-<meta name="description" content="引言之前已经实现在Windows上使用Visual studio和VisualGDB插件交叉编译开发普通的C工程代码，并且也已经验证VS交叉编译生成的文件放在树莓派上是可以直接运行的。接下来想开发在树莓派上运行的界面程序，毫无疑问，大家想到的应该都是QT，但是如何在树莓派上搭建QT环境，又如何在Windows上使用VS开发并交叉编译QT应用程序，这给我造成了很大的困扰。本文根据个人实践介绍一种最简">
+<meta name="description" content="引言之前的文章里有实现在Windows下通过微软自带的远程桌面，可以通过pi用户远程登录到树莓派上的方法，实现本机PC对树莓派的相关操作。但实际上通过这种方法访问的树莓派桌面与树莓派HDMI口输出的真实桌面是不同的，它们似乎是只共享了存储和文件而已，它们的桌面实际上是不一样的。如果需要查看并且操作树莓派真实的HDMI输出桌面，一种方法是给它接上屏幕、鼠标、键盘。另一种方法是可以通过在树莓派上安装x">
 <meta property="og:type" content="article">
-<meta property="og:title" content="搭建树莓派3上的QT环境并使用VS交叉编译开发的方法">
-<meta property="og:url" content="etrd.org/2017/02/19/搭建树莓派3上的QT环境并使用VS交叉编译开发的方法/index.html">
+<meta property="og:title" content="使用VNCviewer远程访问树莓派的HDMI输出桌面">
+<meta property="og:url" content="etrd.org/2017/02/20/使用VNCviewer远程访问树莓派的HDMI输出桌面/index.html">
 <meta property="og:site_name" content="ETRD博客">
-<meta property="og:description" content="引言之前已经实现在Windows上使用Visual studio和VisualGDB插件交叉编译开发普通的C工程代码，并且也已经验证VS交叉编译生成的文件放在树莓派上是可以直接运行的。接下来想开发在树莓派上运行的界面程序，毫无疑问，大家想到的应该都是QT，但是如何在树莓派上搭建QT环境，又如何在Windows上使用VS开发并交叉编译QT应用程序，这给我造成了很大的困扰。本文根据个人实践介绍一种最简">
-<meta property="og:image" content="etrd.org/2017/02/19/搭建树莓派3上的QT环境并使用VS交叉编译开发的方法/QQ截图20170219162043.png">
-<meta property="og:image" content="etrd.org/2017/02/19/搭建树莓派3上的QT环境并使用VS交叉编译开发的方法/QQ截图20170219154904.png">
-<meta property="og:image" content="etrd.org/2017/02/19/搭建树莓派3上的QT环境并使用VS交叉编译开发的方法/QQ截图20170219154928.png">
-<meta property="og:image" content="etrd.org/2017/02/19/搭建树莓派3上的QT环境并使用VS交叉编译开发的方法/QQ截图20170219162820.png">
-<meta property="og:image" content="etrd.org/2017/02/19/搭建树莓派3上的QT环境并使用VS交叉编译开发的方法/QQ截图20170219163101.png">
-<meta property="og:image" content="etrd.org/2017/02/19/搭建树莓派3上的QT环境并使用VS交叉编译开发的方法/QQ截图20170219163936.png">
-<meta property="og:image" content="etrd.org/2017/02/19/搭建树莓派3上的QT环境并使用VS交叉编译开发的方法/QQ截图20170219135206.png">
-<meta property="og:image" content="etrd.org/2017/02/19/搭建树莓派3上的QT环境并使用VS交叉编译开发的方法/QQ截图20170219164518.png">
-<meta property="og:image" content="etrd.org/2017/02/19/搭建树莓派3上的QT环境并使用VS交叉编译开发的方法/QQ截图20170219140359.png">
-<meta property="og:image" content="etrd.org/2017/02/19/搭建树莓派3上的QT环境并使用VS交叉编译开发的方法/QQ截图20170219160142.png">
-<meta property="og:image" content="etrd.org/2017/02/19/搭建树莓派3上的QT环境并使用VS交叉编译开发的方法/QQ截图20170219170016.png">
-<meta property="og:image" content="etrd.org/2017/02/19/搭建树莓派3上的QT环境并使用VS交叉编译开发的方法/QQ截图20170219161142.png">
-<meta property="og:image" content="etrd.org/2017/02/19/搭建树莓派3上的QT环境并使用VS交叉编译开发的方法/QQ截图20170219161253.png">
-<meta property="og:image" content="etrd.org/2017/02/19/搭建树莓派3上的QT环境并使用VS交叉编译开发的方法/QQ截图20170219161543.png">
-<meta property="og:image" content="etrd.org/2017/02/19/搭建树莓派3上的QT环境并使用VS交叉编译开发的方法/QQ截图20170219161631.png">
-<meta property="og:image" content="etrd.org/2017/02/19/搭建树莓派3上的QT环境并使用VS交叉编译开发的方法/QQ截图20170219161042.png">
-<meta property="og:updated_time" content="2017-02-19T09:51:14.201Z">
+<meta property="og:description" content="引言之前的文章里有实现在Windows下通过微软自带的远程桌面，可以通过pi用户远程登录到树莓派上的方法，实现本机PC对树莓派的相关操作。但实际上通过这种方法访问的树莓派桌面与树莓派HDMI口输出的真实桌面是不同的，它们似乎是只共享了存储和文件而已，它们的桌面实际上是不一样的。如果需要查看并且操作树莓派真实的HDMI输出桌面，一种方法是给它接上屏幕、鼠标、键盘。另一种方法是可以通过在树莓派上安装x">
+<meta property="og:image" content="etrd.org/2017/02/20/使用VNCviewer远程访问树莓派的HDMI输出桌面/QQ截图20170220201604.png">
+<meta property="og:image" content="etrd.org/2017/02/20/使用VNCviewer远程访问树莓派的HDMI输出桌面/QQ截图20170220191142.png">
+<meta property="og:image" content="etrd.org/2017/02/20/使用VNCviewer远程访问树莓派的HDMI输出桌面/QQ截图20170220200142.png">
+<meta property="og:image" content="etrd.org/2017/02/20/使用VNCviewer远程访问树莓派的HDMI输出桌面/QQ截图20170220200230.png">
+<meta property="og:image" content="etrd.org/2017/02/20/使用VNCviewer远程访问树莓派的HDMI输出桌面/QQ截图20170220204901.png">
+<meta property="og:image" content="etrd.org/2017/02/20/使用VNCviewer远程访问树莓派的HDMI输出桌面/QQ截图20170220205525.png">
+<meta property="og:image" content="etrd.org/2017/02/20/使用VNCviewer远程访问树莓派的HDMI输出桌面/QQ截图20170220210018.png">
+<meta property="og:updated_time" content="2017-02-20T13:16:43.109Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="搭建树莓派3上的QT环境并使用VS交叉编译开发的方法">
-<meta name="twitter:description" content="引言之前已经实现在Windows上使用Visual studio和VisualGDB插件交叉编译开发普通的C工程代码，并且也已经验证VS交叉编译生成的文件放在树莓派上是可以直接运行的。接下来想开发在树莓派上运行的界面程序，毫无疑问，大家想到的应该都是QT，但是如何在树莓派上搭建QT环境，又如何在Windows上使用VS开发并交叉编译QT应用程序，这给我造成了很大的困扰。本文根据个人实践介绍一种最简">
-<meta name="twitter:image" content="etrd.org/2017/02/19/搭建树莓派3上的QT环境并使用VS交叉编译开发的方法/QQ截图20170219162043.png">
+<meta name="twitter:title" content="使用VNCviewer远程访问树莓派的HDMI输出桌面">
+<meta name="twitter:description" content="引言之前的文章里有实现在Windows下通过微软自带的远程桌面，可以通过pi用户远程登录到树莓派上的方法，实现本机PC对树莓派的相关操作。但实际上通过这种方法访问的树莓派桌面与树莓派HDMI口输出的真实桌面是不同的，它们似乎是只共享了存储和文件而已，它们的桌面实际上是不一样的。如果需要查看并且操作树莓派真实的HDMI输出桌面，一种方法是给它接上屏幕、鼠标、键盘。另一种方法是可以通过在树莓派上安装x">
+<meta name="twitter:image" content="etrd.org/2017/02/20/使用VNCviewer远程访问树莓派的HDMI输出桌面/QQ截图20170220201604.png">
 
 
 
@@ -138,13 +129,13 @@
 
 
 
-  <link rel="canonical" href="etrd.org/2017/02/19/搭建树莓派3上的QT环境并使用VS交叉编译开发的方法/"/>
+  <link rel="canonical" href="etrd.org/2017/02/20/使用VNCviewer远程访问树莓派的HDMI输出桌面/"/>
 
 
 
 
 
-  <title> 搭建树莓派3上的QT环境并使用VS交叉编译开发的方法 | ETRD博客 </title>
+  <title> 使用VNCviewer远程访问树莓派的HDMI输出桌面 | ETRD博客 </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -287,7 +278,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-  <link itemprop="mainEntityOfPage" href="etrd.org/2017/02/19/搭建树莓派3上的QT环境并使用VS交叉编译开发的方法/">
+  <link itemprop="mainEntityOfPage" href="etrd.org/2017/02/20/使用VNCviewer远程访问树莓派的HDMI输出桌面/">
 
   <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
     <meta itemprop="name" content="launcher">
@@ -311,7 +302,7 @@
             
             
               
-                搭建树莓派3上的QT环境并使用VS交叉编译开发的方法
+                使用VNCviewer远程访问树莓派的HDMI输出桌面
               
             
           </h1>
@@ -326,8 +317,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-02-19T14:22:02+08:00">
-                2017-02-19
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-02-20T19:42:18+08:00">
+                2017-02-20
               </time>
             
 
@@ -367,8 +358,8 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2017/02/19/搭建树莓派3上的QT环境并使用VS交叉编译开发的方法/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/02/19/搭建树莓派3上的QT环境并使用VS交叉编译开发的方法/" itemprop="commentCount"></span>
+                <a href="/2017/02/20/使用VNCviewer远程访问树莓派的HDMI输出桌面/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/02/20/使用VNCviewer远程访问树莓派的HDMI输出桌面/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -378,7 +369,7 @@
 
           
           
-             <span id="/2017/02/19/搭建树莓派3上的QT环境并使用VS交叉编译开发的方法/" class="leancloud_visitors" data-flag-title="搭建树莓派3上的QT环境并使用VS交叉编译开发的方法">
+             <span id="/2017/02/20/使用VNCviewer远程访问树莓派的HDMI输出桌面/" class="leancloud_visitors" data-flag-title="使用VNCviewer远程访问树莓派的HDMI输出桌面">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -405,104 +396,57 @@
       
 
       
-        <h4 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h4><p>之前已经实现在Windows上使用Visual studio和VisualGDB插件交叉编译开发普通的C工程代码，并且也已经验证VS交叉编译生成的文件放在树莓派上是可以直接运行的。接下来想开发在树莓派上运行的界面程序，毫无疑问，大家想到的应该都是QT，但是如何在树莓派上搭建QT环境，又如何在Windows上使用VS开发并交叉编译QT应用程序，这给我造成了很大的困扰。本文根据个人实践介绍一种最简单、工作量最少的快速在树莓派上搭建QT环境的方法。</p>
-<h4 id="研究现状"><a href="#研究现状" class="headerlink" title="研究现状"></a>研究现状</h4><p>Google查找了大量的资料，发现基本都在使用同一种方法，就是在Windows或者Ubuntu的PC机上先用交叉编译工具使用树莓派raspbian系统中的头文件及库将QT本身编译一遍，然后将交叉编译出来的Qt文件上传到树莓派上。然而很不幸的是这个编译过程相当复杂，编译过程可能缺少的东西也会很多，更要紧的是即使是多核PC机编译也需要花费大量的时间，6、7个小时之久。可是，为什么是这个思路？必须这么做还是只能这么做。</p>
-<p>根据前面使用树莓派的wiringpi这个库的经验，我个人的思路是这样的：首先在树莓派上安装好QT需要的相关库或者文件，然后同步到Windows的交叉编译的工具链文件目录中，然后Windows下VS交叉编译的时候直接调用同步过来的库和文件就应该可以生成在树莓派上能直接运行的程序了。</p>
-<p>因此应该首先在树莓派上装好QT，看过一篇文献，里面提到将Qt的源码下载下来，然后在树莓派上进行编译Qt本身进行安装，时间长达38小时之久，因为树莓派本身运行速度的问题，或者这就是后来很多人又在Windows或者Ubuntu的PC机上进行交叉编译Qt本身的原因。可是，为什么每个使用Qt的人都需要自己将Qt本身编译一次，如果我们使用同样的系统，同样的开发方式，理论上我应该完全可以用你编译好的Qt文件，我为什么还需要自己再去浪费7、8个小时，而且很可能还不成功。应该有组织甚至是官方帮我们在对应的系统上预编译好了我们直接用就行了。实际上是有的，Debian Jessie官方就提供了已经编译好的Qt5的包。</p>
-<h4 id="先决条件"><a href="#先决条件" class="headerlink" title="先决条件"></a>先决条件</h4><ul>
-<li>树莓派的系统是Raspbian Jessie</li>
+        <h4 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h4><p>之前的文章里有实现在Windows下通过微软自带的远程桌面，可以通过pi用户远程登录到树莓派上的方法，实现本机PC对树莓派的相关操作。但实际上通过这种方法访问的树莓派桌面与树莓派HDMI口输出的真实桌面是不同的，它们似乎是只共享了存储和文件而已，它们的桌面实际上是不一样的。如果需要查看并且操作树莓派真实的HDMI输出桌面，一种方法是给它接上屏幕、鼠标、键盘。另一种方法是可以通过在树莓派上安装x11vnc并启动服务，在Windows PC端或者Android手机端通过VNC Viewer来进行远程查看并操作树莓派真实的HDMI输出桌面。</p>
+<h4 id="需求的提出"><a href="#需求的提出" class="headerlink" title="需求的提出"></a>需求的提出</h4><ul>
+<li><p>Visual studio 2013结合VisualGDB插件对目标运行在树莓派上的Qt程序进行交叉编译后进行远程调试的时候，可以通过Xming来在本机显示出Qt在树莓派上的运行界面，但总感觉有点慢。在调试的时候还可以选择界面输出显示在远程机器上：</p>
+<p><img src="/2017/02/20/使用VNCviewer远程访问树莓派的HDMI输出桌面/QQ截图20170220201604.png" alt="QQ截图20170220201604"></p>
+<p>注意这个Shown on the remot computer是指树莓派实际的HDMI输出，你通过Windows远程登录的桌面是看不到调试时候的Qt程序界面的。</p>
+<p>所以我才需要VNC Viewer来查看并操作树莓派的实际HDMI输出桌面。</p>
+</li>
+<li><p>手机可以安装VNCviewer，可以用手机充当树莓派的屏幕，也很方便。</p>
+</li>
 </ul>
-<p>从参考文献的第一句话可以看出，Debian Jessie在官方仓库中提供了Qt5的包</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">This tutorial shows how to create graphical applications for Raspberry Pi running the Debian Jessie distro using the Qt5 package provided by the official repository.</span><br></pre></td></tr></table></figure>
-<p>由于Raspbian Jessie基于Debian Jessie，因此自然是可以的。</p>
 <a id="more"></a>
-<p>在之前我修改系统镜像源的时候，复制别人的配置信息把系统的源配置误配成了基于wheezy的，实际我的系统是基于Jessie的，导致我后来在树莓派上使用命令：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install qt5-default</span><br></pre></td></tr></table></figure>
-<p>一直提示软件列表中没有找到安装包，可见基于wheezy系统的树莓派貌似不能直接安装Qt5。</p>
-<p>因此先在基于Jessie的树莓派上安装Qt5，然后同步库和文件到Windows的交叉编译工具文件下，进行调用交叉编译开发这个思路应该死完全可行的。</p>
-<p>本文基于的软件版本是</p>
-<ul>
-<li>Visual studio 2013</li>
-<li>VisualGDB-5.2r7-trial</li>
+<h4 id="树莓派端安装x11vnc"><a href="#树莓派端安装x11vnc" class="headerlink" title="树莓派端安装x11vnc"></a>树莓派端安装x11vnc</h4><ul>
+<li>安装x11vnc</li>
 </ul>
-<p>如果你也是使用VisualGDB这个VS插件，则强烈建议按照其官方提供的教程文档（参考文献中提供）来进行远程安装配置。因为它会自动帮你同步需要的文件，并下载Qt5交叉编译工具。以确保开发环境的完整性。</p>
-<h4 id="环境搭建步骤"><a href="#环境搭建步骤" class="headerlink" title="环境搭建步骤"></a>环境搭建步骤</h4><p>我们根据参考文献，利用VS建立工程的方式诱发VisualGDB帮我们搭建树莓派以及Windows两端的Qt环境。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install x11vnc</span><br></pre></td></tr></table></figure>
 <ul>
-<li>确保你的树莓派系统是基于Jessie的，并给它上电，确保其与PC机处于同一局域网。</li>
-<li>在Visual Studio中新建项目：</li>
+<li>设置远程链接的密码</li>
 </ul>
-<p><img src="/2017/02/19/搭建树莓派3上的QT环境并使用VS交叉编译开发的方法/QQ截图20170219162043.png" alt="QQ截图20170219162043"></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">x11vnc -storepasswd</span><br></pre></td></tr></table></figure>
+<p><img src="/2017/02/20/使用VNCviewer远程访问树莓派的HDMI输出桌面/QQ截图20170220191142.png" alt="QQ截图20170220191142"></p>
+<p>输入密码时，终端是不会显示任何东西的，尽管输入，输入完回车即可。</p>
 <ul>
-<li>选择 Use Qt，并在下方选择语言C++，项目模板：Qt5-base application，点击next</li>
+<li>如果想每次手动启动服务，可以每次输入如下命令：</li>
 </ul>
-<p><img src="/2017/02/19/搭建树莓派3上的QT环境并使用VS交叉编译开发的方法/QQ截图20170219154904.png" alt="QQ截图20170219154904"></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">x11vnc -forever -usepw -display :0</span><br></pre></td></tr></table></figure>
+<p>然后想取消服务按Ctrl+C</p>
 <ul>
-<li>跟之前的工程一样，选择在本地进行交叉编译，配置好远程登录的信息，部署目录默认/tmp，勾选一下 Automatically test connection….这个选项它帮助我们建立工程之前检查远程连接的环境。</li>
+<li>如果想希望它随系统自动启动通过如下命令进行</li>
 </ul>
-<p><img src="/2017/02/19/搭建树莓派3上的QT环境并使用VS交叉编译开发的方法/QQ截图20170219154928.png" alt="QQ截图20170219154928"></p>
-<ul>
-<li>点击左下角的 Click here to configure Qt settings，配置Qt</li>
-</ul>
-<p><img src="/2017/02/19/搭建树莓派3上的QT环境并使用VS交叉编译开发的方法/QQ截图20170219162820.png" alt="QQ截图20170219162820"></p>
-<ul>
-<li>如下是配置对话框，Qt version请选择5.x，Mkspecs directory的路径是默认这样的。</li>
-</ul>
-<p><img src="/2017/02/19/搭建树莓派3上的QT环境并使用VS交叉编译开发的方法/QQ截图20170219163101.png" alt="QQ截图20170219163101"></p>
-<p>如果你的树莓派上还没有安装好Qt5显然这个Mkspecs directory是不存在的，但是VisualGDB也不会帮你自动建立，此时如果你点击OK，那么VisualGDB会报错，提示目录不存在！无法往下进行。因此，此时你需要自己去树莓派中对应的目录下建立qt5文件夹以及在qt5文件下再建立mkspecs文件夹。使用的是mkdir命令，这里不再冗述。</p>
-<ul>
-<li>在树莓派中建立好上面这个文件目录以后，点击OK按钮。</li>
-</ul>
-<p><img src="/2017/02/19/搭建树莓派3上的QT环境并使用VS交叉编译开发的方法/QQ截图20170219163936.png" alt="QQ截图20170219163936"></p>
-<p>VisualGDB会检测树莓派中没有对应的Qt5包，因此提示是否帮自动安装。点击Yes</p>
-<p>（此图我没有截下来，引用参考文献中的图）</p>
-<ul>
-<li>此时VisualGDB会自动帮安装qt5-default。实际上它也是使用命令</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install qt5-default</span><br></pre></td></tr></table></figure>
-<p>进行远程操控树莓派进行安装的！</p>
-<p><img src="/2017/02/19/搭建树莓派3上的QT环境并使用VS交叉编译开发的方法/QQ截图20170219135206.png" alt="QQ截图20170219135206"></p>
-<ul>
-<li>树莓派上安装完Qt5以后，VisualGDB会提示本地Windows中的sysroot目录下没有包含树莓派端的Qt头文件等，是否重新进行同步？选择是</li>
-</ul>
-<p><img src="/2017/02/19/搭建树莓派3上的QT环境并使用VS交叉编译开发的方法/QQ截图20170219164518.png" alt="QQ截图20170219164518"></p>
-<p>（此图引用自参考文档）</p>
-<ul>
-<li>按照参考文献中的图片，我之前的工程配置是同步了/etc目录的，现在去掉这个/etc目录的同步，保持与参考文献中同步的目录一致，避免不必要的麻烦。</li>
-</ul>
-<p><img src="/2017/02/19/搭建树莓派3上的QT环境并使用VS交叉编译开发的方法/QQ截图20170219140359.png" alt="QQ截图20170219140359"></p>
-<p>同步过程需要十几分钟，实际上就是从树莓派上将对应目录的文件拷贝到Windows本地。</p>
-<ul>
-<li><p>文件同步完成后，VisualGDB会自动帮下载安装交叉编译使用的Qt工具。</p>
-<p><img src="/2017/02/19/搭建树莓派3上的QT环境并使用VS交叉编译开发的方法/QQ截图20170219160142.png" alt="QQ截图20170219160142"></p>
-<p>注意，我发现VisualGDB帮下载东西总是很慢，如果你也下载到后面，进度条很久都不动了，建议Cancel重试一下。我怀疑是国外网站被墙的原因，建议开启<strong>全局科学上网</strong>的方式，再重试。我发现这样就很快了，但我并不确定。</p>
-<p>这个QT5 tools我理解应该是Windows上编译用的，因为它最终被安装在</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">D:\SysGCC\Raspberry\Qt\v5</span><br></pre></td></tr></table></figure>
-<p><img src="/2017/02/19/搭建树莓派3上的QT环境并使用VS交叉编译开发的方法/QQ截图20170219170016.png" alt="QQ截图20170219170016"></p>
-</li>
-<li><p>接下来，一个基于Qt5的模板工程自动建立</p>
-<p>直接点击VS的调试按钮运行程序！</p>
-</li>
-<li><p>此时VisualGDB提示缺少X Server for Windows，它的作用是能够远程显示Linux的窗口，很好很强大的功能，强烈推荐安装！修改你想安装的目录，点击OK即可。</p>
-<p><img src="/2017/02/19/搭建树莓派3上的QT环境并使用VS交叉编译开发的方法/QQ截图20170219161142.png" alt="QQ截图20170219161142"></p>
-<p>​</p>
-</li>
-<li><p>安装完成以后，运行程序，已经可以看到基于Qt的对话框了。</p>
-<p><img src="/2017/02/19/搭建树莓派3上的QT环境并使用VS交叉编译开发的方法/QQ截图20170219161253.png" alt="QQ截图20170219161253"></p>
-</li>
-<li><p>关闭Windows端的调试程序，来到树莓派的部署目录/tmp</p>
-<p><img src="/2017/02/19/搭建树莓派3上的QT环境并使用VS交叉编译开发的方法/QQ截图20170219161543.png" alt="QQ截图20170219161543"></p>
-<p>果然找到了我们在Windows下交叉编译生成的可执行文件，双击运行。</p>
-<p><img src="/2017/02/19/搭建树莓派3上的QT环境并使用VS交叉编译开发的方法/QQ截图20170219161631.png" alt="QQ截图20170219161631"></p>
-<p>果然可以执行，说明我们已经实现在Windows下交叉编译可以直接运行在树莓派上的基于Qt的界面程序了。</p>
-</li>
-<li><p>在树莓派中我们再通过命令</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">qmake -v</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<p><img src="/2017/02/19/搭建树莓派3上的QT环境并使用VS交叉编译开发的方法/QQ截图20170219161042.png" alt="QQ截图20170219161042"></p>
-<p>可以看到我们安装的是Qt 5.3.2版本，这应该就是Debian Jessie官方帮我们已经编译好的Qt了。</p>
-<h4 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h4><p>本文基于参考文献，实践验证了一种极其简单方便的为树莓派3搭建Qt环境，并在Windows下交叉编译能直接在树莓派上运行的基于Qt的界面应用程序的方法，无需花大量时间和复杂的步骤对Qt本身进行编译。但这仅限于树莓派的系统是Jessie的，不过这个系统应该可以运行在树莓派的各个硬件版本上，所以应该说强烈建议安装这个新的系统。</p>
-<h4 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h4><p><a href="https://visualgdb.com/tutorials/raspberry/qt5/" target="_blank" rel="external">https://visualgdb.com/tutorials/raspberry/qt5/</a></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cd .config</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mkdir autostart</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cd autostart</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nano x11vnc.desktop</span><br></pre></td></tr></table></figure>
+<p><img src="/2017/02/20/使用VNCviewer远程访问树莓派的HDMI输出桌面/QQ截图20170220200142.png" alt="QQ截图20170220200142"></p>
+<p>然后复制如下内容进去：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">[Desktop Entry]</span><br><span class="line">Encoding=UTF-8</span><br><span class="line">Type=Application</span><br><span class="line">Name=X11VNC</span><br><span class="line">Comment=</span><br><span class="line">Exec=x11vnc -forever -usepw -display :0</span><br><span class="line">StartupNotify=false</span><br><span class="line">Terminal=false</span><br><span class="line">Hidden=false</span><br></pre></td></tr></table></figure>
+<p><img src="/2017/02/20/使用VNCviewer远程访问树莓派的HDMI输出桌面/QQ截图20170220200230.png" alt="QQ截图20170220200230"></p>
+<p>然后保存退出</p>
+<p>x11vnc则会每次开机自动启动</p>
+<p><strong>说明</strong>：自启动的步骤和方法由<a href="https://www.raspberrypi.org/forums/viewtopic.php?p=108862#p108862" target="_blank" rel="external">参考文档</a>提供，不过我做了一点小小的改动，把-ultrafilexfer这个参数删掉了，因为有这个参数好像协议版本的问题每次连接都提示一个警告，我并不希望这样。</p>
+<h4 id="Windows端安装VNC-Viewer"><a href="#Windows端安装VNC-Viewer" class="headerlink" title="Windows端安装VNC Viewer"></a>Windows端安装VNC Viewer</h4><p>通过<a href="https://www.realvnc.com/" target="_blank" rel="external">realvnc的网站</a>下载Windows下的客户端，确保树莓派和Windows在同一局域网，通过IP连接即可</p>
+<p>Windows下显示效果（部分截图）</p>
+<p><img src="/2017/02/20/使用VNCviewer远程访问树莓派的HDMI输出桌面/QQ截图20170220204901.png" alt="QQ截图20170220204901"></p>
+<h4 id="Android手机安装VNC-Viewer"><a href="#Android手机安装VNC-Viewer" class="headerlink" title="Android手机安装VNC Viewer"></a>Android手机安装VNC Viewer</h4><p><img src="/2017/02/20/使用VNCviewer远程访问树莓派的HDMI输出桌面/QQ截图20170220205525.png" alt="QQ截图20170220205525"></p>
+<p>同样手机与树莓派处于同一局域网下，这是手机上的显示效果：</p>
+<p><img src="/2017/02/20/使用VNCviewer远程访问树莓派的HDMI输出桌面/QQ截图20170220210018.png" alt="QQ截图20170220210018"></p>
+<p><strong>需要注意的是，Windows端和Android端同时只能有一个进行连接</strong> 。</p>
+<h4 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h4><p>本文给出了Windows下和Android下通过VNC Viewer远程连接操作树莓派3真实HDMI输出桌面的方法，有利于在Windows下开发和仿真调试在树莓派上运行的Qt界面程序，同时也完全可以代替原来的Windows通过微软自带的远程桌面连接树莓派进行操作的方法。</p>
+<h4 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h4><p><a href="https://www.raspberrypi.org/forums/viewtopic.php?p=108862#p108862" target="_blank" rel="external">https://www.raspberrypi.org/forums/viewtopic.php?p=108862#p108862</a></p>
+<p><a href="http://raspberrypi.stackexchange.com/questions/9590/tightvncserver-show-the-same-screen-on-hdmi-and-vncclient" target="_blank" rel="external">http://raspberrypi.stackexchange.com/questions/9590/tightvncserver-show-the-same-screen-on-hdmi-and-vncclient</a></p>
+<p><a href="https://www.realvnc.com/" target="_blank" rel="external">https://www.realvnc.com/</a></p>
 
       
     </div>
@@ -526,13 +470,11 @@
       
         <div class="post-tags">
           
-            <a href="/tags/树莓派3B/" rel="tag"># 树莓派3B</a>
+            <a href="/tags/VNC-Viewer/" rel="tag"># VNC Viewer</a>
           
-            <a href="/tags/Qt5/" rel="tag"># Qt5</a>
+            <a href="/tags/HDMI/" rel="tag"># HDMI</a>
           
-            <a href="/tags/raspbian-jessie/" rel="tag"># raspbian jessie</a>
-          
-            <a href="/tags/交叉编译/" rel="tag"># 交叉编译</a>
+            <a href="/tags/桌面/" rel="tag"># 桌面</a>
           
         </div>
       
@@ -541,8 +483,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/01/29/树莓派3硬件串口的使用及编程/" rel="next" title="树莓派3硬件串口的使用及编程">
-                <i class="fa fa-chevron-left"></i> 树莓派3硬件串口的使用及编程
+              <a href="/2017/02/19/搭建树莓派3上的QT环境并使用VS交叉编译开发的方法/" rel="next" title="搭建树莓派3上的QT环境并使用VS交叉编译开发的方法">
+                <i class="fa fa-chevron-left"></i> 搭建树莓派3上的QT环境并使用VS交叉编译开发的方法
               </a>
             
           </div>
@@ -550,10 +492,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2017/02/20/使用VNCviewer远程访问树莓派的HDMI输出桌面/" rel="prev" title="使用VNCviewer远程访问树莓派的HDMI输出桌面">
-                使用VNCviewer远程访问树莓派的HDMI输出桌面 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -568,10 +506,10 @@
 
     <div class="post-spread">
       
-        <div class="ds-share flat" data-thread-key="2017/02/19/搭建树莓派3上的QT环境并使用VS交叉编译开发的方法/"
-     data-title="搭建树莓派3上的QT环境并使用VS交叉编译开发的方法"
+        <div class="ds-share flat" data-thread-key="2017/02/20/使用VNCviewer远程访问树莓派的HDMI输出桌面/"
+     data-title="使用VNCviewer远程访问树莓派的HDMI输出桌面"
      data-content=""
-     data-url="etrd.org/2017/02/19/搭建树莓派3上的QT环境并使用VS交叉编译开发的方法/">
+     data-url="etrd.org/2017/02/20/使用VNCviewer远程访问树莓派的HDMI输出桌面/">
   <div class="ds-share-inline">
     <ul  class="ds-share-icons-16">
 
@@ -598,8 +536,8 @@
           
   <div class="comments" id="comments">
     
-      <div class="ds-thread" data-thread-key="2017/02/19/搭建树莓派3上的QT环境并使用VS交叉编译开发的方法/"
-           data-title="搭建树莓派3上的QT环境并使用VS交叉编译开发的方法" data-url="etrd.org/2017/02/19/搭建树莓派3上的QT环境并使用VS交叉编译开发的方法/">
+      <div class="ds-thread" data-thread-key="2017/02/20/使用VNCviewer远程访问树莓派的HDMI输出桌面/"
+           data-title="使用VNCviewer远程访问树莓派的HDMI输出桌面" data-url="etrd.org/2017/02/20/使用VNCviewer远程访问树莓派的HDMI输出桌面/">
       </div>
     
   </div>
@@ -773,7 +711,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#引言"><span class="nav-number">1.</span> <span class="nav-text">引言</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#研究现状"><span class="nav-number">2.</span> <span class="nav-text">研究现状</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#先决条件"><span class="nav-number">3.</span> <span class="nav-text">先决条件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#环境搭建步骤"><span class="nav-number">4.</span> <span class="nav-text">环境搭建步骤</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#小结"><span class="nav-number">5.</span> <span class="nav-text">小结</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#参考文献"><span class="nav-number">6.</span> <span class="nav-text">参考文献</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#引言"><span class="nav-number">1.</span> <span class="nav-text">引言</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#需求的提出"><span class="nav-number">2.</span> <span class="nav-text">需求的提出</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#树莓派端安装x11vnc"><span class="nav-number">3.</span> <span class="nav-text">树莓派端安装x11vnc</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Windows端安装VNC-Viewer"><span class="nav-number">4.</span> <span class="nav-text">Windows端安装VNC Viewer</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Android手机安装VNC-Viewer"><span class="nav-number">5.</span> <span class="nav-text">Android手机安装VNC Viewer</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#小结"><span class="nav-number">6.</span> <span class="nav-text">小结</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#参考文献"><span class="nav-number">7.</span> <span class="nav-text">参考文献</span></a></li></ol></div>
             
 
           </div>

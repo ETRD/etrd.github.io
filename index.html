@@ -271,6 +271,181 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="etrd.org/2017/02/20/使用VNCviewer远程访问树莓派的HDMI输出桌面/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="launcher">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="/uploads/launcherhead.png">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="ETRD博客">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="ETRD博客" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2017/02/20/使用VNCviewer远程访问树莓派的HDMI输出桌面/" itemprop="url">
+                  使用VNCviewer远程访问树莓派的HDMI输出桌面
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-02-20T19:42:18+08:00">
+                2017-02-20
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/树莓派/" itemprop="url" rel="index">
+                    <span itemprop="name">树莓派</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/02/20/使用VNCviewer远程访问树莓派的HDMI输出桌面/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/02/20/使用VNCviewer远程访问树莓派的HDMI输出桌面/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2017/02/20/使用VNCviewer远程访问树莓派的HDMI输出桌面/" class="leancloud_visitors" data-flag-title="使用VNCviewer远程访问树莓派的HDMI输出桌面">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h4 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h4><p>之前的文章里有实现在Windows下通过微软自带的远程桌面，可以通过pi用户远程登录到树莓派上的方法，实现本机PC对树莓派的相关操作。但实际上通过这种方法访问的树莓派桌面与树莓派HDMI口输出的真实桌面是不同的，它们似乎是只共享了存储和文件而已，它们的桌面实际上是不一样的。如果需要查看并且操作树莓派真实的HDMI输出桌面，一种方法是给它接上屏幕、鼠标、键盘。另一种方法是可以通过在树莓派上安装x11vnc并启动服务，在Windows PC端或者Android手机端通过VNC Viewer来进行远程查看并操作树莓派真实的HDMI输出桌面。</p>
+<h4 id="需求的提出"><a href="#需求的提出" class="headerlink" title="需求的提出"></a>需求的提出</h4><ul>
+<li><p>Visual studio 2013结合VisualGDB插件对目标运行在树莓派上的Qt程序进行交叉编译后进行远程调试的时候，可以通过Xming来在本机显示出Qt在树莓派上的运行界面，但总感觉有点慢。在调试的时候还可以选择界面输出显示在远程机器上：</p>
+<p><img src="/2017/02/20/使用VNCviewer远程访问树莓派的HDMI输出桌面/QQ截图20170220201604.png" alt="QQ截图20170220201604"></p>
+<p>注意这个Shown on the remot computer是指树莓派实际的HDMI输出，你通过Windows远程登录的桌面是看不到调试时候的Qt程序界面的。</p>
+<p>所以我才需要VNC Viewer来查看并操作树莓派的实际HDMI输出桌面。</p>
+</li>
+<li><p>手机可以安装VNCviewer，可以用手机充当树莓派的屏幕，也很方便。</p>
+</li>
+</ul>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2017/02/20/使用VNCviewer远程访问树莓派的HDMI输出桌面/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
   <link itemprop="mainEntityOfPage" href="etrd.org/2017/02/19/搭建树莓派3上的QT环境并使用VS交叉编译开发的方法/">
 
   <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1502,7 +1677,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">7</span>
+                <span class="site-state-item-count">8</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -1520,7 +1695,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">25</span>
+                <span class="site-state-item-count">28</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
