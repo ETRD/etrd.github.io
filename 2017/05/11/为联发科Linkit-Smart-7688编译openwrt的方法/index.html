@@ -1,0 +1,1065 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="MT7688,openwrt,linux," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="引言：​    正式接触linux实际上是今年年初，因为有个项目需要将程序运行在嵌入式平台，而在此之前我大学四年及工作两年几乎都游走在基于Cortex-M单片机的周边。在我印象中ARM开发板都是一块很臃肿很庞大的电路板，然而前阵子我偶然找到了联发科联合seed出的一款开源硬件Linkit Smart 7688平台，非常的小巧精致，然而它仍然可以运行一个Linux系统-openwrt。这篇文章给出了">
+<meta property="og:type" content="article">
+<meta property="og:title" content="为联发科Linkit-Smart-7688编译openwrt的方法">
+<meta property="og:url" content="etrd.org/2017/05/11/为联发科Linkit-Smart-7688编译openwrt的方法/index.html">
+<meta property="og:site_name" content="ETRD博客">
+<meta property="og:description" content="引言：​    正式接触linux实际上是今年年初，因为有个项目需要将程序运行在嵌入式平台，而在此之前我大学四年及工作两年几乎都游走在基于Cortex-M单片机的周边。在我印象中ARM开发板都是一块很臃肿很庞大的电路板，然而前阵子我偶然找到了联发科联合seed出的一款开源硬件Linkit Smart 7688平台，非常的小巧精致，然而它仍然可以运行一个Linux系统-openwrt。这篇文章给出了">
+<meta property="og:image" content="etrd.org/2017/05/11/为联发科Linkit-Smart-7688编译openwrt的方法/QQ截图20170511191531.png">
+<meta property="og:image" content="etrd.org/2017/05/11/为联发科Linkit-Smart-7688编译openwrt的方法/QQ截图20170510221119.png">
+<meta property="og:image" content="etrd.org/2017/05/11/为联发科Linkit-Smart-7688编译openwrt的方法/QQ截图20170512092310.png">
+<meta property="og:image" content="etrd.org/2017/05/11/为联发科Linkit-Smart-7688编译openwrt的方法/QQ截图20170512093743.png">
+<meta property="og:image" content="etrd.org/2017/05/11/为联发科Linkit-Smart-7688编译openwrt的方法/QQ截图20170512094125.png">
+<meta property="og:image" content="etrd.org/2017/05/11/为联发科Linkit-Smart-7688编译openwrt的方法/QQ截图20170512095142.png">
+<meta property="og:image" content="etrd.org/2017/05/11/为联发科Linkit-Smart-7688编译openwrt的方法/QQ截图20170512095618.png">
+<meta property="og:image" content="etrd.org/2017/05/11/为联发科Linkit-Smart-7688编译openwrt的方法/QQ截图20170512095658.png">
+<meta property="og:image" content="etrd.org/2017/05/11/为联发科Linkit-Smart-7688编译openwrt的方法/QQ截图20170512101212.png">
+<meta property="og:updated_time" content="2017-05-12T03:10:10.751Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="为联发科Linkit-Smart-7688编译openwrt的方法">
+<meta name="twitter:description" content="引言：​    正式接触linux实际上是今年年初，因为有个项目需要将程序运行在嵌入式平台，而在此之前我大学四年及工作两年几乎都游走在基于Cortex-M单片机的周边。在我印象中ARM开发板都是一块很臃肿很庞大的电路板，然而前阵子我偶然找到了联发科联合seed出的一款开源硬件Linkit Smart 7688平台，非常的小巧精致，然而它仍然可以运行一个Linux系统-openwrt。这篇文章给出了">
+<meta name="twitter:image" content="etrd.org/2017/05/11/为联发科Linkit-Smart-7688编译openwrt的方法/QQ截图20170511191531.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="etrd.org/2017/05/11/为联发科Linkit-Smart-7688编译openwrt的方法/"/>
+
+
+
+
+
+  <title> 为联发科Linkit-Smart-7688编译openwrt的方法 | ETRD博客 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?d2d0e50f38b5fe60de2be11e44da1f33";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">ETRD博客</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+    
+      <p class="site-subtitle">Electronic Technology Research&Development</p>
+    
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="etrd.org/2017/05/11/为联发科Linkit-Smart-7688编译openwrt的方法/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="launcher">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="/uploads/launcherhead.png">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="ETRD博客">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="ETRD博客" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                为联发科Linkit-Smart-7688编译openwrt的方法
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-05-11T18:43:27+08:00">
+                2017-05-11
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/linux/" itemprop="url" rel="index">
+                    <span itemprop="name">linux</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/05/11/为联发科Linkit-Smart-7688编译openwrt的方法/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/05/11/为联发科Linkit-Smart-7688编译openwrt的方法/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2017/05/11/为联发科Linkit-Smart-7688编译openwrt的方法/" class="leancloud_visitors" data-flag-title="为联发科Linkit-Smart-7688编译openwrt的方法">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h4 id="引言："><a href="#引言：" class="headerlink" title="引言："></a>引言：</h4><p>​    正式接触linux实际上是今年年初，因为有个项目需要将程序运行在嵌入式平台，而在此之前我大学四年及工作两年几乎都游走在基于Cortex-M单片机的周边。在我印象中ARM开发板都是一块很臃肿很庞大的电路板，然而前阵子我偶然找到了联发科联合seed出的一款开源硬件Linkit Smart 7688平台，非常的小巧精致，然而它仍然可以运行一个Linux系统-openwrt。这篇文章给出了详细的为Linkit Smart 7688平台编译openwrt系统的方法，及可能遇到的问题的解决办法。</p>
+<h4 id="Linkit-Smart-7688-简介"><a href="#Linkit-Smart-7688-简介" class="headerlink" title="Linkit Smart 7688 简介"></a>Linkit Smart 7688 简介</h4><p>​    Linkit Smart 7688 基于联发科MT7688AN芯片设计，MT7688AN芯片核心为 MIPS24KEc，主频580MHz。Linkit Smart 7688 拥有32MB Flash，128MB DDR2 RAM，这个Flash和RAM的大小使得我们可以做很多普通单片机平台无非完成的工作。它还板载wifi、USB、SD卡接口，使得其可以进行丰富的扩展，它被称为一台可以放进口袋的linux机器。</p>
+<p><img src="/2017/05/11/为联发科Linkit-Smart-7688编译openwrt的方法/QQ截图20170511191531.png" alt="QQ截图20170511191531"></p>
+<h4 id="编译openwrt系统的动机"><a href="#编译openwrt系统的动机" class="headerlink" title="编译openwrt系统的动机"></a>编译openwrt系统的动机</h4><p>​    实际上，<a href="https://docs.labs.mediatek.com/resource/linkit-smart-7688/en/downloads" target="_blank" rel="external">联发科官方</a>已经提供了一套现成 boot镜像、系统镜像、以及Linux和OS X上使用的交叉编译工具链。因此对于普通的应用来讲，既然已经有了现成的可运行的系统、我们只要通过交叉编译工具开发我们的应用程序就可以了，为什么还需要重新去花大量的时间去重新编译一次系统。我Google了很多linkit Smart 7688的入门资料，我们发现很多朋友一上来就是要重新编译系统，我就非常不能理解。我主张尽量使用现成的东西，因此拿到这款板子之后，我做的第一件事情是烧录官方提供的最新的系统镜像文件让板子运行起来，接着便开始使用交叉编译工具编译我项目的应用程序，我验证发现，这个项目的应用程序经过交叉编译后可以运行在这个板子上。因此我决定将它作为这个项目的一款首选平台，但是它的硬件串口数量似乎太少了，只有3个串口，有一个串口还默认是调试功能，但还好它有USB，完全可以通过CP210x进行串口扩展，然而我发现USB识别不了CP210x USB转串口芯片。实际上linux内核是已经包含了CP210x的驱动的，只是联发科提供的系统没有将其编译进去，因此我需要重新配置系统编译选项，将USB转串口的驱动程序编译到系统中，这是我要为MT7688重新编译openwrt系统的动机。</p>
+<a id="more"></a>
+<h4 id="编译openwrt系统的准备"><a href="#编译openwrt系统的准备" class="headerlink" title="编译openwrt系统的准备"></a>编译openwrt系统的准备</h4><ul>
+<li>如果你跟我一样没有太多的Linux的经验和概念，以前从未为嵌入式平台编译过Linux系统，那非常推荐先看一位叫jollen的台湾大神对 <a href="https://www.youtube.com/watch?v=ywM_bPE7GDk&amp;t=1377s" target="_blank" rel="external">Linkit Smart 7688 的30分钟演讲</a>（YouTube 需要科学上网观看），GitHub上有他挂的<a href="https://github.com/jollen/7688-embedded-linux" target="_blank" rel="external">讲稿资料</a>，他用30分钟的时间精炼的讲解和演示了一遍为7688编译openwrt的过程，虽然只有30分钟，但是值得反复观摩。</li>
+<li>准备一台安装了ubuntu的电脑，或者虚拟机，我使用的是ubuntu 14.04 LTS版本。需要用它来编译openwrt系统，它需要连接网络，因为编译过程需要从网络上下载大量的库文件。</li>
+</ul>
+<h4 id="编译过程"><a href="#编译过程" class="headerlink" title="编译过程"></a>编译过程</h4><p>编译的流程主要参考并综合了<a href="https://github.com/MediaTek-Labs/linkit-smart-7688-feed" target="_blank" rel="external">联发科官方提供</a>的步骤以及<a href="https://github.com/jollen/blog/issues/3" target="_blank" rel="external">jollen提供的步骤</a>。</p>
+<p>1、为ubuntu安装需要的包</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo apt-get install git g++ make libncurses5-dev subversion libssl-dev gawk libxml-parser-perl unzip wget python xz-utils</span><br></pre></td></tr></table></figure>
+<p>2、使用git下载 OpenWrt的源码</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git <span class="built_in">clone</span> git://git.openwrt.org/15.05/openwrt.git</span><br></pre></td></tr></table></figure>
+<p>此时会从网络上下载openwrt的源码并以”openwrt”为文件夹名放在当前目录。</p>
+<p>3、进入openwrt文件中，并为feeds准备配置文件</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">cd</span> openwrt</span><br><span class="line">$ cp feeds.conf.default feeds.conf</span><br></pre></td></tr></table></figure>
+<p>4、增加 Linkit Smart 7688 feed</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">echo</span> src-git linkit https://github.com/MediaTek-Labs/linkit-smart-7688-feed.git &gt;&gt; feeds.conf</span><br></pre></td></tr></table></figure>
+<p>5、更新feed并安装相应的包</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ ./scripts/feeds update</span><br><span class="line">$ ./scripts/feeds install <span class="_">-a</span></span><br></pre></td></tr></table></figure>
+<p>6、配置openwrt的系统编译选单</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ make prereq</span><br><span class="line">$ make menuconfig</span><br></pre></td></tr></table></figure>
+<p>以下选项必须按照这个来选：</p>
+<ul>
+<li>Target System: <code>Ralink RT288x/RT3xxx</code></li>
+<li>Subtarget: <code>MT7688 based boards</code></li>
+<li>Target Profile: <code>LinkIt7688</code></li>
+</ul>
+<p>然后接下来，其它选项就可以根据自己的需要来勾选了，比如需要USB的什么驱动，因为默认情况下只会编译几个常用的驱动，像我需要把自己需要的CP210x 的USB Series 驱动勾选上。</p>
+<p>选择好之后保存并退出。</p>
+<p>jollen说 make prereq 指令只在openwrt下载后需要做一次即可，以后直接执行 make menuconfig进行系统配置即可。</p>
+<p>7、开始下达编译指令</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ make V=99</span><br></pre></td></tr></table></figure>
+<p>8、成功编译完成以后，生成的系统镜像文件在bin/ramips/目录下：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bin/ramips/openwrt-ramips-mt7688-LinkIt7688-squashfs-sysupgrade.bin</span><br></pre></td></tr></table></figure>
+<p>可以通过mt7688的web ui进行固件更新，或者将openwrt-ramips-mt7688-LinkIt7688-squashfs-sysupgrade.bin重命名为lks7688.img，然后通过U盘进行固件更新。</p>
+<h4 id="错误处理"><a href="#错误处理" class="headerlink" title="错误处理"></a>错误处理</h4><p>​    理想情况下，根据以上步骤就可以为7688编译出系统镜像文件了，但事情总不会那么顺利，会出现一些编译错误，这些错误可能是随着时间的发展，代码的更新而出来的。</p>
+<ul>
+<li><h5 id="错误1：mt-wifi-ko-3-18-45-No-Such-file-or-directory"><a href="#错误1：mt-wifi-ko-3-18-45-No-Such-file-or-directory" class="headerlink" title="错误1：mt_wifi.ko_3.18.45:No  Such file or directory"></a>错误1：mt_wifi.ko_3.18.45:No  Such file or directory</h5></li>
+</ul>
+<p><img src="/2017/05/11/为联发科Linkit-Smart-7688编译openwrt的方法/QQ截图20170510221119.png" alt="QQ截图20170510221119"></p>
+<p>MT7688的wifi驱动是由联发科在其<a href="https://github.com/MediaTek-Labs/linkit-smart-7688-feed" target="_blank" rel="external">GitHub上</a>以编译好的文件形式提供的，并不提供源码，每次openwrt使用不同linux内核版本时，联发科就要相应提供对应内核版本的wifi驱动文件。而我们使用git获取openwrt的源码是最新的openwrt源码，它使用的linux内核版本是Linux-3.18.45。查看联发科<a href="https://github.com/MediaTek-Labs/linkit-smart-7688-feed/tree/master/mtk-sdk-wifi/wifi_binary" target="_blank" rel="external">GitHub提供的wifi_bin</a>文件，发现最近的更新只到3.18.44这个版本：</p>
+<p><img src="/2017/05/11/为联发科Linkit-Smart-7688编译openwrt的方法/QQ截图20170512092310.png" alt="QQ截图20170512092310">因此，如果使用联发科提供的wifi驱动，只能使用上面对应的内核版本的openwrt代码，最新是3.18.44。查看<a href="https://git.openwrt.org/?p=15.05/openwrt.git;a=summary" target="_blank" rel="external">openwrt的git更新简要日志</a>：</p>
+<p><img src="/2017/05/11/为联发科Linkit-Smart-7688编译openwrt的方法/QQ截图20170512093743.png" alt="QQ截图20170512093743"></p>
+<p>发现是在2016-12-19这次提交时，内核更新到了3.18.45，因此我们需要将openwrt的源码版本回滚到2016-12-18这次使用3.18.44内核版本的最新提交，点击其commit按钮，查看：</p>
+<p><img src="/2017/05/11/为联发科Linkit-Smart-7688编译openwrt的方法/QQ截图20170512094125.png" alt="QQ截图20170512094125"></p>
+<p>使用<a href="https://github.com/MediaTek-Labs/linkit-smart-7688-feed/issues/37" target="_blank" rel="external">rsc1975网友提供的方法</a>，可以将openwrt的源码版本回滚到2016-12-18这个版本，命令如下：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git checkout c170d84bbe08e0f049c99d3f376aae170a36458e -b pre_3_18_45</span><br></pre></td></tr></table></figure>
+<p>这个命令应该在上述步骤中，git 下载完openwrt源码，进入openwrt目录之后立即首先执行。</p>
+<h5 id="错误2：linux-3-18-44-tar-xz-源码下载失败"><a href="#错误2：linux-3-18-44-tar-xz-源码下载失败" class="headerlink" title="错误2：linux-3.18.44.tar.xz 源码下载失败"></a>错误2：linux-3.18.44.tar.xz 源码下载失败</h5><p><img src="/2017/05/11/为联发科Linkit-Smart-7688编译openwrt的方法/QQ截图20170512095142.png" alt="QQ截图20170512095142"></p>
+<p>原因是内核下载源的问题，下载源在 openwrt/scripts/download.pl 文件中进行配置：</p>
+<p><img src="/2017/05/11/为联发科Linkit-Smart-7688编译openwrt的方法/QQ截图20170512095618.png" alt="QQ截图20170512095618"></p>
+<p>linux 内核官网已经发布公告，陆续停止ftp服务，download.pl文件中使用的内核下载源已经在2017年3月1号停止服务了，所以需要更新下载源为<a href="https://www.kernel.org/pub/...：" target="_blank" rel="external">https://www.kernel.org/pub/...：</a></p>
+<p><img src="/2017/05/11/为联发科Linkit-Smart-7688编译openwrt的方法/QQ截图20170512095658.png" alt="QQ截图20170512095658"></p>
+<h5 id="错误3：还有一些软件包无法下载"><a href="#错误3：还有一些软件包无法下载" class="headerlink" title="错误3：还有一些软件包无法下载"></a>错误3：还有一些软件包无法下载</h5><p><img src="/2017/05/11/为联发科Linkit-Smart-7688编译openwrt的方法/QQ截图20170512101212.png" alt="QQ截图20170512101212"></p>
+<p>处理方法是找到正确的下载源，直接使用wget命令手动下载到openwrt/dl目录中：</p>
+<p>例如上面报错的confuse-2.7.tar.gz手动下载方法：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wget http://pkgs.fedoraproject.org/repo/pkgs/libconfuse/confuse-2.7.tar.gz/45932fdeeccbb9ef4228f1c1a25e9c8f/confuse-2.7.tar.gz -O dl/confuse-2.7.tar.gz</span><br></pre></td></tr></table></figure>
+<p>我还报错了一个avrdude-6.1.tar.gz的包无法下载</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wget http://mirror.lihnidos.org/GNU/savannah/avrdude/avrdude-6.1.tar.gz -O dl/avrdude-6.1.tar.gz</span><br></pre></td></tr></table></figure>
+<p>其它无法下载的包，下载源可以从Google上搜，les1ie网站的博主在<a href="http://les1ie.com/2017/04/07/MT-7688%E7%B3%BB%E7%BB%9F%E7%BC%96%E8%AF%91%E8%BF%87%E7%A8%8B/" target="_blank" rel="external">无涯7688系统交叉编译过程</a>这篇笔记中也提供了一些下载源，至少我上面不能下载的两个包在他提供的源里有，这里引用列出供参考：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">https://www.kernel.org/pub/linux/kernel/v3.x/linux-3.18.44.tar.xz</span><br><span class="line">https://download.samba.org/pub/samba/stable/samba-3.6.25.tar.gz</span><br><span class="line">http://pkgs.fedoraproject.org/repo/pkgs/libconfuse/confuse-2.7.tar.gz/45932fdeeccbb9ef4228f1c1a25e9c8f/confuse-2.7.tar.gz</span><br><span class="line">https://www.kernel.org/pub/software/scm/git/git-2.3.5.tar.xz</span><br><span class="line">http://mirror.lihnidos.org/GNU/savannah/avrdude/avrdude-6.1.tar.gz</span><br></pre></td></tr></table></figure>
+<h4 id="重新整理编译过程"><a href="#重新整理编译过程" class="headerlink" title="重新整理编译过程"></a>重新整理编译过程</h4><p>​    上文中都是按照官方步骤，然后以发现问题，解决问题重新返回的顺序编写的，这里重新梳理一遍在已知问题情况下进行正确编译的流程：</p>
+<p>1、为ubuntu安装必要的包</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo apt-get install git g++ make libncurses5-dev subversion libssl-dev gawk libxml-parser-perl unzip wget python xz-utils</span><br></pre></td></tr></table></figure>
+<p>2、下载openwrt源码</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git <span class="built_in">clone</span> git://git.openwrt.org/15.05/openwrt.git</span><br></pre></td></tr></table></figure>
+<p>3、进入openwrt目录，回滚openwrt源码版本到使用3.18.44内核的旧版本</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">cd</span> openwrt</span><br><span class="line">$ git checkout c170d84bbe08e0f049c99d3f376aae170a36458e -b pre_3_18_45</span><br></pre></td></tr></table></figure>
+<p>4、为feed准备文件，增加 LinkIt Smart 7688 feed</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ cp feeds.conf.default feeds.conf</span><br><span class="line">$ <span class="built_in">echo</span> src-git linkit https://github.com/MediaTek-Labs/linkit-smart-7688-feed.git &gt;&gt; feeds.conf</span><br></pre></td></tr></table></figure>
+<p>5、更新feed并安装相应的包</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ ./scripts/feeds update</span><br><span class="line">$ ./scripts/feeds install <span class="_">-a</span></span><br></pre></td></tr></table></figure>
+<p>6、配置openwrt的系统编译选单</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ make prereq</span><br><span class="line">$ make menuconfig</span><br></pre></td></tr></table></figure>
+<p>7、修改kernel的下载源</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">cd</span> scripts/</span><br><span class="line">$ gedit download.pl</span><br></pre></td></tr></table></figure>
+<p>安装上面错误2处理方法中的进行修改。</p>
+<p>8、下达编译指令</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ make V=99</span><br></pre></td></tr></table></figure>
+<p>编译过程中遇到无法下载的包报错，Google到下载源以后手动使用wget命令下载到/dl文件夹中，然后继续执行编译指令。</p>
+<h4 id="参考文献："><a href="#参考文献：" class="headerlink" title="参考文献："></a>参考文献：</h4><p><a href="https://labs.mediatek.com/en/platform/linkit-smart-7688" target="_blank" rel="external">https://labs.mediatek.com/en/platform/linkit-smart-7688</a></p>
+<p><a href="https://docs.labs.mediatek.com/resource/linkit-smart-7688/en/downloads" target="_blank" rel="external">https://docs.labs.mediatek.com/resource/linkit-smart-7688/en/downloads</a></p>
+<p><a href="https://www.youtube.com/watch?v=ywM_bPE7GDk&amp;t=1377s" target="_blank" rel="external">https://www.youtube.com/watch?v=ywM_bPE7GDk&amp;t=1377s</a></p>
+<p><a href="https://github.com/jollen/7688-embedded-linux" target="_blank" rel="external">https://github.com/jollen/7688-embedded-linux</a></p>
+<p><a href="https://github.com/MediaTek-Labs/linkit-smart-7688-feed" target="_blank" rel="external">https://github.com/MediaTek-Labs/linkit-smart-7688-feed</a></p>
+<p><a href="https://github.com/jollen/blog/issues/3" target="_blank" rel="external">https://github.com/jollen/blog/issues/3</a></p>
+<p><a href="https://git.openwrt.org/?p=15.05/openwrt.git;a=summary" target="_blank" rel="external">https://git.openwrt.org/?p=15.05/openwrt.git;a=summary</a></p>
+<p><a href="https://github.com/MediaTek-Labs/linkit-smart-7688-feed/issues/37" target="_blank" rel="external">https://github.com/MediaTek-Labs/linkit-smart-7688-feed/issues/37</a></p>
+<p><a href="https://github.com/openwrt/openwrt/issues/263" target="_blank" rel="external">https://github.com/openwrt/openwrt/issues/263</a></p>
+<p><a href="http://les1ie.com/2017/04/07/MT-7688%E7%B3%BB%E7%BB%9F%E7%BC%96%E8%AF%91%E8%BF%87%E7%A8%8B/" target="_blank" rel="external">http://les1ie.com/2017/04/07/MT-7688%E7%B3%BB%E7%BB%9F%E7%BC%96%E8%AF%91%E8%BF%87%E7%A8%8B/</a></p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/MT7688/" rel="tag"># MT7688</a>
+          
+            <a href="/tags/openwrt/" rel="tag"># openwrt</a>
+          
+            <a href="/tags/linux/" rel="tag"># linux</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/03/11/ISOEBBS发布袖珍型Jlink仿真器/" rel="next" title="ISOEBBS发布袖珍型Jlink仿真器">
+                <i class="fa fa-chevron-left"></i> ISOEBBS发布袖珍型Jlink仿真器
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <div class="ds-share flat" data-thread-key="2017/05/11/为联发科Linkit-Smart-7688编译openwrt的方法/"
+     data-title="为联发科Linkit-Smart-7688编译openwrt的方法"
+     data-content=""
+     data-url="etrd.org/2017/05/11/为联发科Linkit-Smart-7688编译openwrt的方法/">
+  <div class="ds-share-inline">
+    <ul  class="ds-share-icons-16">
+
+      <li data-toggle="ds-share-icons-more"><a class="ds-more" href="javascript:void(0);">分享到：</a></li>
+      <li><a class="ds-weibo" href="javascript:void(0);" data-service="weibo">微博</a></li>
+      <li><a class="ds-qzone" href="javascript:void(0);" data-service="qzone">QQ空间</a></li>
+      <li><a class="ds-qqt" href="javascript:void(0);" data-service="qqt">腾讯微博</a></li>
+      <li><a class="ds-wechat" href="javascript:void(0);" data-service="wechat">微信</a></li>
+
+    </ul>
+    <div class="ds-share-icons-more">
+    </div>
+  </div>
+</div>
+      
+    </div>
+  </div>
+
+          
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2017/05/11/为联发科Linkit-Smart-7688编译openwrt的方法/"
+           data-title="为联发科Linkit-Smart-7688编译openwrt的方法" data-url="etrd.org/2017/05/11/为联发科Linkit-Smart-7688编译openwrt的方法/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/uploads/launcherhead.png"
+               alt="launcher" />
+          <p class="site-author-name" itemprop="name">launcher</p>
+          <p class="site-description motion-element" itemprop="description">R&D</p>
+        </div>
+        <nav class="site-state motion-element">
+        
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">10</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">5</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">34</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/ETRD" target="_blank" title="新浪微博">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  新浪微博
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://blog.etrd.org" target="_blank" title="新浪博客">
+                  
+                    <i class="fa fa-fw fa-file"></i>
+                  
+                  新浪博客
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://v.etrd.org" target="_blank" title="优酷视频">
+                  
+                    <i class="fa fa-fw fa-youtube-play"></i>
+                  
+                  优酷视频
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://mail.etrd.org" target="_blank" title="邮箱登陆">
+                  
+                    <i class="fa fa-fw fa-envelope-o"></i>
+                  
+                  邮箱登陆
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://twitter.com/CherLaun" target="_blank" title="Twitter">
+                  
+                    <i class="fa fa-fw fa-twitter"></i>
+                  
+                  Twitter
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.facebook.com/launchers" target="_blank" title="Facebook">
+                  
+                    <i class="fa fa-fw fa-facebook-official"></i>
+                  
+                  Facebook
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              友情链接
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://isoebbs.com/" title="ISOE官方论坛" target="_blank">ISOE官方论坛</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://echo.z-dd.net/" title="DD的博客" target="_blank">DD的博客</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://www.sfantree.com/" title="水番林" target="_blank">水番林</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://mlapp.cn/" title="美丽应用" target="_blank">美丽应用</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://itsay.tech" title="张大侠" target="_blank">张大侠</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#引言："><span class="nav-number">1.</span> <span class="nav-text">引言：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Linkit-Smart-7688-简介"><span class="nav-number">2.</span> <span class="nav-text">Linkit Smart 7688 简介</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#编译openwrt系统的动机"><span class="nav-number">3.</span> <span class="nav-text">编译openwrt系统的动机</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#编译openwrt系统的准备"><span class="nav-number">4.</span> <span class="nav-text">编译openwrt系统的准备</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#编译过程"><span class="nav-number">5.</span> <span class="nav-text">编译过程</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#错误处理"><span class="nav-number">6.</span> <span class="nav-text">错误处理</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#错误1：mt-wifi-ko-3-18-45-No-Such-file-or-directory"><span class="nav-number">6.1.</span> <span class="nav-text">错误1：mt_wifi.ko_3.18.45:No  Such file or directory</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#错误2：linux-3-18-44-tar-xz-源码下载失败"><span class="nav-number">6.2.</span> <span class="nav-text">错误2：linux-3.18.44.tar.xz 源码下载失败</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#错误3：还有一些软件包无法下载"><span class="nav-number">6.3.</span> <span class="nav-text">错误3：还有一些软件包无法下载</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#重新整理编译过程"><span class="nav-number">7.</span> <span class="nav-text">重新整理编译过程</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#参考文献："><span class="nav-number">8.</span> <span class="nav-text">参考文献：</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">launcher</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"ETRD"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+    
+    <script src="/lib/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+    <script src="/js/src/hook-duoshuo.js"></script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("gYnYTkF0jOQN1X6kyJJKIxiu-gzGzoHsz", "UcqHlTjyk7lfij1qew9nPaID");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+
+</body>
+</html>
